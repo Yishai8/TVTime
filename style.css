@@ -23,6 +23,14 @@ header {
 	width:100%;
 	background:#222222;
 	padding-top:10px;
+	position:fixed;
+	z-index:99;
+	
+}
+
+main{
+	position:relative;
+	top:100px;
 }
 
 div.container{padding-right:0px;padding-left:0px;margin-left: 0px;margin-right: 0px;width:100%;}
@@ -83,13 +91,14 @@ a img {
 
 #strip {
 	margin-bottom: 0;
-	height: 60px;
-	font-size:14px;
+	height: 40px;
+	font-size:2em;
 	color: white;
 	font-family: Arial;
 	text-align:center;
-	
-}
+	position:relative;
+	top:50px;
+	}
 
 /*images ul*/
 
@@ -232,9 +241,9 @@ right: 80px;
 }
 
 #pageTitle {
-	left: 15%;
+	left: 50px;
 	position: absolute;
-	font-size:14px;
+	font-size:1.4em;
 	color: white;
 	font-family: Arial;
 	
@@ -247,6 +256,10 @@ right: 80px;
    width: 100%; //fallback
    width: 100vw;
 }
+
+div.navbar.navbar-inverse.navbar-fixed-top{width:90%;background: transparent;border-bottom:0px;}
+ul.nav.navbar-nav{width:100%;}
+ul.nav.navbar-nav li{width:20%;font-size:1em;}
 }
 
 
