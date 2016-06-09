@@ -1,0 +1,16 @@
+{
+  "name": "tvtime",
+  "version": "1.0.0",
+  "description": "manage tv schedule",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "yishai neeman & maor hen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "request": "^2.72.0"
+  }
+}
