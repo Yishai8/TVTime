@@ -11,7 +11,9 @@ var tomorrow = day.getFullYear()+'-'+(((day.getMonth()+1) < 10 ? "0" : "") + (da
 var recommended = angular.module('recommended',[]).controller("popular",function ($scope,$http){
 	$http.get('http://localhost:3000/explore').success(function(data) {
 		$scope.cart = data;
-	})});
+	})
+
+});
 
 
 var airing = angular.module('airing',[]);
@@ -32,6 +34,9 @@ airing.controller("tomorrow",function ($scope,$http){
  	$event.currentTarget.innerHTML="Add to Download List";
     
   };
+
+
+
 	$http.get('http://localhost:3000/airing?date='+tomorrow).success(function(data) {
 		
 		$scope.cart = removeDbl(data);

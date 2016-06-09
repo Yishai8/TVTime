@@ -195,6 +195,10 @@ input[type='radio'] {
     border-radius:50%;
     outline:none;
     box-shadow:0 0 5px 0px gray inset;
+    top:30px;
+    right:150px;
+    position: absolute;
+
 }
 input[type='radio']:hover {
     box-shadow:0 0 5px 0px orange inset;
