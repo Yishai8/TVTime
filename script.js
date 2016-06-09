@@ -79,13 +79,15 @@ function detectDay() {
 	if (header!=undefined)
 	{
 		var header_height= window.getComputedStyle(header, "").height.split('px')[0];
+		header_height-=100;
+		var opp_header=header_height-300;
 		if( window.pageYOffset > header_height) {
 			$('#strip').text('Tomorrow');
 
 
 		}
 
-		if( window.pageYOffset < header_height ) {
+		if( window.pageYOffset < opp_header ) {
 			$('#strip').text('Today');
 
 		}

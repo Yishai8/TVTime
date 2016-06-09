@@ -129,38 +129,41 @@ a img {
 
 .image-container {
     position: relative;
-    font-size: x-large;
+    font-size: 1.5em;
+    font-weight: 500;
     text-align: center;
 }
 .image-container .after {
     position: absolute;
-    top: 0;
+    bottom: 10px;
     left: 0;
     color: #FFF;
     text-align: center;
     display: block;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .4);
 	width: 300px;
-    height: auto;
-    object-position: center;
+    height: 100px;
+  
 }
 .toggle {
 
     position: absolute;
-    top: 0;
+    top: -97px;
     left: 0;
     color: #FFF;
     text-align: center;
     display: block;
     background: rgba(0, 0, 0, .6);
 	width: 300px;
-    height: 175px;
-    object-position: center;
+    height: 250px;
+  
 }
 
 p button {
 	margin:0 auto;
-	width: 80%;
+	position:absolute;
+	bottom:10%;
+	width: 100%;
 	height: 50px;
 	background: #f6343f;
 	border: 0;
