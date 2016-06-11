@@ -22,6 +22,7 @@ var port = process.env.PORT || 3000;
     //mongoose.disconnect();
 
     app.get('/airing',function(req, res){
+
         console.log("Airing list "+req.query.date);
         res.header({
     'Content-Type': 'text/plain',

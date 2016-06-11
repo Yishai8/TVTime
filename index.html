@@ -59,7 +59,9 @@
     <ul class="image">
              <li ng-repeat="item in cart" class="image-container">
                  <img width="300px" height="350px" sibs ng-src="{{item.show.image.original}}">
-                 <p sibs class="after">S{{item.season}}E{{item.number}}<br>{{item.show.name}}<button>Add to Download List</button></p>
+                 <p sibs class="after">S{{item.season}}E{{item.number}}<br>{{item.show.name}}
+                  <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span>
+                 <button ng-click="aler($event)">Add to Download List</button></p>
 
              </li>
            </ul>

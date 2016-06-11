@@ -18,7 +18,25 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 
 var airing = angular.module('airing',[]);
 
+airing.factory('randomize', function() {
+  return Math.floor((Math.random()*10)+1);
+});
+
+
 airing.controller("today",function ($scope,$http){
+	 $scope.callNotify = function() {
+     randomize();
+   };
+	$scope.aler = function($event) {
+		if($event.currentTarget.innerHTML=="Add to Download List")
+			$event.currentTarget.innerHTML="test";
+		else
+			$event.currentTarget.innerHTML="Add to Download List";
+
+		$event.stopPropagation();
+
+	};
+
 
 	$http.get('http://localhost:3000/airing?date='+today).success(function(data) {
 		$scope.cart = removeDbl(data);
@@ -26,14 +44,18 @@ airing.controller("today",function ($scope,$http){
 	})});
 
 airing.controller("tomorrow",function ($scope,$http){
+ $scope.callNotify = function() {
+     notify();
+   };
+	$scope.aler = function($event) {
+		if($event.currentTarget.innerHTML=="Add to Download List")
+			$event.currentTarget.innerHTML="test";
+		else
+			$event.currentTarget.innerHTML="Add to Download List";
 
- $scope.aler = function($event) {
- 	if($event.currentTarget.innerHTML=="Add to Download List")
- 	$event.currentTarget.innerHTML="test";
- else
- 	$event.currentTarget.innerHTML="Add to Download List";
-    
-  };
+		$event.stopPropagation();
+
+	};
 
 
 
@@ -43,23 +65,25 @@ airing.controller("tomorrow",function ($scope,$http){
 	})});
 
 airing.directive('sibs', function() {
-    return {
-        link: function(scope, element, attrs) {
-            element.bind('click', function() {
-            	if(element.parent().children('p').hasClass('after'))
-            	{
-                element.parent().children('p').removeClass('after');
-                element.parent().children('p').addClass('toggle');
-                }
-                else
-                {
-                	element.parent().children('p').removeClass('toggle');
-                element.parent().children('p').addClass('after');
-                }
-            })
-        },
-    }
+	return {
+		link: function(scope, element, attrs) {
+			element.bind('click', function() {
+					if(element.parent().children('p').hasClass('after'))
+					{
+						element.parent().children('p').removeClass('after');
+						element.parent().children('p').addClass('toggle');
+					}
+					else
+					{
+						element.parent().children('p').removeClass('toggle');
+						element.parent().children('p').addClass('after');
+					}
+				
+			})
+		},
+	}
 });
+
 
 function removeDbl(data){
 	var arr=[];
