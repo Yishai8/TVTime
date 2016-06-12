@@ -19,14 +19,12 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 var airing = angular.module('airing',[]);
 
 airing.factory('randomize', function() {
-  return Math.floor((Math.random()*10)+1);
+	return Math.floor((Math.random()*10)+1);
 });
 
 
 airing.controller("today",function ($scope,$http){
-	 $scope.callNotify = function() {
-     randomize();
-   };
+
 	$scope.aler = function($event) {
 		if($event.currentTarget.innerHTML=="Add to Download List")
 			$event.currentTarget.innerHTML="test";
@@ -44,9 +42,9 @@ airing.controller("today",function ($scope,$http){
 	})});
 
 airing.controller("tomorrow",function ($scope,$http){
- $scope.callNotify = function() {
-     notify();
-   };
+	$scope.callNotify = function() {
+		notify();
+	};
 	$scope.aler = function($event) {
 		if($event.currentTarget.innerHTML=="Add to Download List")
 			$event.currentTarget.innerHTML="test";
@@ -64,25 +62,79 @@ airing.controller("tomorrow",function ($scope,$http){
 		$scope.cart = removeDbl(data);
 	})});
 
-airing.directive('sibs', function() {
+airing.directive('sibs', function($http) {
 	return {
 		link: function(scope, element, attrs) {
 			element.bind('click', function() {
-					if(element.parent().children('p').hasClass('after'))
-					{
-						element.parent().children('p').removeClass('after');
-						element.parent().children('p').addClass('toggle');
-					}
-					else
-					{
-						element.parent().children('p').removeClass('toggle');
-						element.parent().children('p').addClass('after');
-					}
+				if(element.parent().children('p').hasClass('after'))
+				{
+					$http.get('http://localhost:3000/checkShow?userID=1&&showID=157').success(function(data) {
+						if(data!=null)
+							element.parent().children('p').children('button')[0].innerHTML='a';
+					
+					});
+					element.parent().children('p').removeClass('after');
+					element.parent().children('p').addClass('toggle');
+				}
+				else
+				{
+					element.parent().children('p').removeClass('toggle');
+					element.parent().children('p').addClass('after');
+				}
 				
 			})
 		},
 	}
 });
+
+
+airing.directive('youtube', function($http) {
+	return {
+		link: function(scope, element, attrs) {
+			element.bind('click', function() {
+				var target = element[0].querySelector('#show');
+				$http.get('http://localhost:3000/youtube?name='+target.innerHTML).success(function(data) {
+
+
+							});
+			})
+		},
+	}
+});
+
+
+
+airing.directive('click', function($http) {
+	return {
+		link: function(scope, element, attrs) {
+			if(attrs && attrs.click)
+				element.bind(attrs.click, function (e) {
+					if(element.html()=="Add to Download List") {
+						element[0].innerHTML="test";
+						$http.get('http://localhost:3000/insertUserShow?name='+element.parent().children('span')[0].innerHTML+
+							'&&id=1').success(function(data) {
+
+
+							});
+
+
+
+						}
+						else {
+							element[0].innerHTML="Add to Download List";
+
+						}
+						e.stopPropagation();
+					})
+		},
+	}
+});
+
+
+
+
+
+
 
 
 function removeDbl(data){
@@ -160,3 +212,4 @@ $('.image img').on("click","a,img", function (e) {
 	e.preventDefault();
 	alert('You Clicked Me');
 });
+

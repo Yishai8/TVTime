@@ -4,23 +4,21 @@ var GInfo = require ('./WS');
 var express= require('express');
 var app= express();
 var port = process.env.PORT || 3000;
-// var mongoose = require ('mongoose');
-// mongoose.connect ('mongodb://db_usr:db_pass@ds023560.mlab.com:23560/grades16');
-// var conn=mongoose.connection;
+var mongoose = require ('mongoose');
+mongoose.connect ('mongodb://tvt:tvt@ds013004.mlab.com:13004/tvtime');
+var conn=mongoose.connection;
 // var fs = require("fs");
-// var grade = require ('./grade');
-// var gradeM= mongoose.model('Grade',grade);
+var user = require ('./user');
+var show = require ('./show');
+var showM= mongoose.model('Show',show);
+var userM= mongoose.model('User',user);
+conn.on('error', function(err) {
+    console.log('connection error: ' + err);
+ });
 
-
-// conn.on('error', function(err) {
-//     console.log('connection error' + err);
-// });
-
-// conn.once('open',function() {
-//     console.log('connected successfuly to the remote DB');
-    
-    //mongoose.disconnect();
-
+conn.once('open',function() {
+     console.log('connected successfuly to the remote DB');
+ 
     app.get('/airing',function(req, res){
 
         console.log("Airing list "+req.query.date);
@@ -30,6 +28,35 @@ var port = process.env.PORT || 3000;
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
           GInfo.airingToday(res,req.query.date); 
+    });
+
+    app.get('/insertUserShow',function(req, res){
+
+        console.log("insert new show "+req.query.name+" for user "+req.query.id);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.insertUserShow(res,req.query.name,req.query.id,userM); 
+    });
+
+      app.get('/checkShow',function(req, res){
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.checkShow(res,req.query.showID,req.query.userID,userM); 
+    });
+
+      app.get('/youtube',function(req, res){
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.youtube(res,req.query.name); 
     });
 
 
@@ -71,10 +98,11 @@ var port = process.env.PORT || 3000;
     });
 
 
+
     app.listen(port);
     console.log("listening on port "+port+" and waiting for WS requests");
     
-// });
+ });
 
 
 

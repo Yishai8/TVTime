@@ -38,7 +38,7 @@
            </li>
            <li class="active"><a href="#"><img src="images/download-logo.png" height="20px" width="30px">Download List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
+           <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
            <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
            </li>
@@ -59,9 +59,9 @@
     <ul class="image">
              <li ng-repeat="item in cart" class="image-container">
                  <img width="300px" height="350px" sibs ng-src="{{item.show.image.original}}">
-                 <p sibs class="after">S{{item.season}}E{{item.number}}<br>{{item.show.name}}
+                 <p sibs class="after">S{{item.season}}E{{item.number}}<br><span id="show">{{item.show.name}}</span> 
                   <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span>
-                 <button ng-click="aler($event)">Add to Download List</button></p>
+                 <button click='click' >Add to Download List</button></p>
 
              </li>
            </ul>
@@ -71,7 +71,7 @@
     <ul class="image">
              <li ng-repeat="item in cart" class="image-container">
                  <img width="300px" height="350px" sibs ng-src="{{item.show.image.original}}">
-                 <p sibs class="after">S{{item.season}}E{{item.number}}<br>{{item.show.name}}<button ng-click="aler($event)">Add to Download List</button></p>
+                 <p sibs class="after">S{{item.season}}E{{item.number}}<br>{{item.show.name}}<button click='click'>Add to Download List</button></p>
              </li>
            </ul>
 

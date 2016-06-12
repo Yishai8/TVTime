@@ -41,7 +41,7 @@
            </li>
            <li class="active"><a href="#"><img src="images/download-logo.png" height="20px" width="30px">Download List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
+           <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
            <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
            </li>
@@ -64,7 +64,7 @@
   <section  ng-controller="popular" class="ShowsScreen1">
     <ul class="image">
              <li ng-repeat="item in cart.results" class="image-container">
-                 <img width="300px" height="350px" ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
+                 <img ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
                  <p class="after">{{item.name}}<br><input type="radio"></input></p>
                  
                  

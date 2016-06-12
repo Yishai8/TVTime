@@ -24,6 +24,55 @@ var viewArr=module.exports=
 
     },
 
+     youtube : function (res,name) { 
+      var YouTube = require('youtube-node');
+
+var youTube = new YouTube();
+
+youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
+
+youTube.search(name+' Trailer', 2, function(error, result) {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    console.log(JSON.stringify(result, null, 2));
+  }
+});
+
+    },
+
+    insertUserShow : function (res,showName,userID,userM) {
+
+        var newShow= {
+            "id": 157,
+                "ep_id": 4355
+        };
+       userM.findOne().where('id',userID).update({ 'shows.id': {$ne: newShow.id}}, 
+        {$push: {shows:newShow}
+    }
+).exec(function(err,doc){
+
+            console.log(doc);
+            res.end();
+
+        });
+
+        
+    },
+
+    checkShow : function (res,showName,userID,userM) {
+        console.log(showName+' '+userID);
+       userM.findOne().where('id',userID).where('shows.id',showName).exec(function(err,doc){
+
+            console.log(doc);
+            res.end(JSON.stringify(doc));
+
+        });
+
+        
+    },
+
     airingToday : function (res,date) { 
 
         request({

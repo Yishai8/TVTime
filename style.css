@@ -125,6 +125,8 @@ a img {
 
 	padding-bottom: 20px;
 	padding-top: 3px;
+	width:300px;
+	height:350px;
 }
 
 .image-container {
@@ -171,6 +173,13 @@ p button  {
 	object-position: center;
 }
 
+.toggle #show , .after #show {
+	top:10px;
+	display:block;
+    left: 0;
+    padding-top:20px;
+}
+
 p span {
 
 	position:absolute;
@@ -195,6 +204,8 @@ p span {
 
 	background:black;
 }
+
+
 
 /*radio button select css*/
 
@@ -268,6 +279,35 @@ right: 80px;
 	
 }
 
+.myList_ul li{
+
+	display: block;
+	background: #9d2128;
+	border-width:0px 0px 5px 0px ;
+	border-style: solid;
+	border-color:#f6343f;
+	color:white;
+	position: relative;
+}
+
+.list-container img {
+	
+	top:10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+
+}
+
+.list-container div {
+	position: absolute;
+	left:50%;
+	display:inline;
+	top:30px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
 @media(min-width:768px){
 	#menu
 {
@@ -279,6 +319,3 @@ div.navbar.navbar-inverse.navbar-fixed-top{width:90%;background: transparent;bor
 ul.nav.navbar-nav{width:100%;}
 ul.nav.navbar-nav li{width:20%;font-size:1em;}
 }
-
-
-
