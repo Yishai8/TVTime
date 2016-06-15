@@ -32,13 +32,35 @@ conn.once('open',function() {
 
     app.get('/insertUserShow',function(req, res){
 
-        console.log("insert new show "+req.query.name+" for user "+req.query.id);
+        console.log("insert new show "+req.query.name+" for user "+req.query.user);
         res.header({
     'Content-Type': 'text/plain',
     'Access-Control-Allow-Origin' : '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
-          GInfo.insertUserShow(res,req.query.name,req.query.id,userM); 
+          GInfo.insertUserShow(res,req.query.name,req.query.id,req.query.img,req.query.user,userM); 
+    });
+
+    app.get('/getUserShows',function(req, res){
+
+        console.log("Getting shows list for user "+req.query.userID);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.getUserShows(res,req.query.userID,userM); 
+    });
+
+    app.get('/removeUserShow',function(req, res){
+
+        console.log("remove show "+req.query.name+" for user "+req.query.user);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.removeUserShow(res,req.query.name,req.query.id,req.query.user,userM); 
     });
 
       app.get('/checkShow',function(req, res){

@@ -14,76 +14,126 @@ var viewArr=module.exports=
         var url =
         request({
           url:'https://api.themoviedb.org/3/tv/on_the_air?api_key=fa67dde53cd1a4800f274049291de923' ,
-           json: true
-          }, function (error, response, body) {
+          json: true
+      }, function (error, response, body) {
 
-            if (!error && response.statusCode === 200) {
+        if (!error && response.statusCode === 200) {
         res.json(body); // Print the json response
     }
 });
 
     },
 
-     youtube : function (res,name) { 
+    youtube : function (res,name) { 
       var YouTube = require('youtube-node');
 
-var youTube = new YouTube();
+      var youTube = new YouTube();
 
-youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
+      youTube.setKey('AIzaSyB1OOSpTREs85WUMvIgJvLTZKye4BVsoFU');
 
-youTube.search(name+' Trailer', 2, function(error, result) {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    console.log(JSON.stringify(result, null, 2));
-  }
-});
+      youTube.search(name+' Trailer', 2, function(error, result) {
+          if (error) {
+            console.log(error);
+        }
+        else {
+            console.log(JSON.stringify(result, null, 2));
+        }
+    });
 
-    },
+  },
 
-    insertUserShow : function (res,showName,userID,userM) {
+  insertUserShow : function (res,showName,showID,link,userID,userM) {
 
-        var newShow= {
-            "id": 157,
-                "ep_id": 4355
-        };
-       userM.findOne().where('id',userID).update({ 'shows.id': {$ne: newShow.id}}, 
+    var newShow= {
+        "id": showID,
+        "name":showName,
+        "season":1,
+        "ep_id": 1,
+        "active":true,
+        "link":link
+    };
+
+    userM.findOne().where('id',userID).update({ 'shows.id': {$ne: newShow.id}}, 
         {$push: {shows:newShow}
     }
-).exec(function(err,doc){
+    ).exec(function(err,doc){
+        res.end("show added");
 
-            console.log(doc);
-            res.end();
+    });
 
-        });
 
+},
+
+getUserShows : function (res,userID,userM) {
+
+
+ userM.find({id: userID}).exec(function(err,doc){
+    res.json(doc);
+
+});
+
+
+},
+
+
+removeUserShow : function (res,showName,showID,userID,userM) {
+
+
+ userM.update(
+    {id: userID, 'shows.id': showID}, 
+    {'$set': {
+        'shows.$.active':false          
+    }}
+    ).exec(function(err,doc){console.log(err+' '+doc);
+   
+    res.end();
+
+});
+
+
+},
+
+checkShow : function (res,showID,userID,userM) {
+    console.log(showID+' '+userID);
+
+    userM.find({ id: userID },{ shows: { $elemMatch: { id: showID,active:true} } } ).exec(function(err,doc){
+        var d=JSON.parse(JSON.stringify(doc));
         
-    },
+        var exist="";
+        d.forEach(function(obj)
+            { if(obj.shows.toString()=='')
+                {
+                   
+                    exist="null";
 
-    checkShow : function (res,showName,userID,userM) {
-        console.log(showName+' '+userID);
-       userM.findOne().where('id',userID).where('shows.id',showName).exec(function(err,doc){
+                }
 
-            console.log(doc);
-            res.end(JSON.stringify(doc));
+            }
 
-        });
+        );
+        if(exist=="null")
+            res.end("null");    
+        res.end(JSON.stringify(doc));
 
-        
-    },
+    }
 
-    airingToday : function (res,date) { 
+    );
 
-        request({
-            url: 'http://api.tvmaze.com/schedule?country=US&date='+String(date),
-            json: true
-        }, function (error, response, body) {
-            if (!error && response.statusCode === 200) {   
+
+},
+
+
+airingToday : function (res,date) { 
+
+    request({
+        url: 'http://api.tvmaze.com/schedule?country=US&date='+String(date),
+        json: true
+    }, function (error, response, body) {
+        if (!error && response.statusCode === 200) {   
         res.json(body); // Print the json response
     }
 })
-        
+
         // gradeM.aggregate( { $unwind: '$students'},{ $match: {'students.GPA': {$gte: 90}}}
         //     ,{ $group: {_id:'$year',
         //     students: {$push: {id:'$students.id',firstName:'$students.firstName',
