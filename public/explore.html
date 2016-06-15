@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="recommended" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.6/angular-filter.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="js/hamburger.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="js/script.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body >
+  <div class="container">
+    <header>
+      <section class="menu">
+       <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="menu" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+           <li class="active"><a href="index.html"><img src="images/feed-logo.png" height="20px" width="30px">Feed</a>
+           </li>
+           <li class="active"><a href="explore.html"><img src="images/explore-logo.png" height="20px" width="30px">Explore</a>
+           </li>
+           <li class="active"><a href="#"><img src="images/download-logo.png" height="20px" width="30px">Download List</a>
+           </li>
+           <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
+           </li>
+           <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
+           </li>
+         </ul>
+       </div>
+     </div>
+     <span id="pageTitle">Explore</span>
+     <img id="mag" src="images/mag.png">
+     <img id="logo" src="images/logo.png">
+   </section>
+  <section><div class="ui-widget">
+  <label for="tags">Tags: </label>
+  <input id="tags">
+</div></section>
+<section >
+    <p id="strip">You might like</p>
+  </section>
+ </header>
+ <main>
+  <section  ng-controller="popular" class="ShowsScreen1">
+    <ul class="image">
+             <li ng-repeat="item in cart.results" class="image-container">
+                 <img ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
+                 <p class="after">{{item.name}}<br><input type="radio"></input></p>
+                 
+                 
+             </li>
+           </ul>
+
+  </section>
+</main>
+</div>
+</body>
+</html>
+
+
+
