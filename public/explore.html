@@ -21,7 +21,7 @@
   <script src="js/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body >
+<body ng-controller="popular">
   <div class="container">
     <header>
       <section class="menu">
@@ -53,21 +53,28 @@
      <img id="logo" src="images/logo.png">
    </section>
   <section><div class="ui-widget">
-  <label for="tags">Tags: </label>
-  <input id="tags">
+ <div id="sb-search" class="sb-search">
+  <form ng-submit="submit()">
+    <input class="sb-search-input" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
+    <input class="sb-search-submit" type="submit" value="sub">
+    <span class="sb-icon-search"></span>
+  </form>
+</div>
 </div></section>
 <section >
     <p id="strip">You might like</p>
   </section>
  </header>
  <main>
-  <section  ng-controller="popular" class="ShowsScreen1">
+  <section   class="ShowsScreen1">
     <ul class="image">
              <li ng-repeat="item in cart.results" class="image-container">
                  <img ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
-                 <p class="after">{{item.name}}<br><input type="radio"></input></p>
-                 
-                 
+                 <p class="after">{{item.name}}<br><input type="radio"></input>
+                  <img id="ex_logo" click title={{item.overview}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
+                 </p>
+                                 
+                   
              </li>
            </ul>
 

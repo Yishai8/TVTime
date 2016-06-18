@@ -173,6 +173,30 @@ p button  {
 	object-position: center;
 }
 
+.image .after .ilogo {
+    
+    display: none;
+}
+
+#ex_logo {
+    position: absolute;
+    height: 45px;
+    width: 25px;
+    top:70px;
+    right:147px;
+    text-align: center;
+    display: inline;
+}
+
+.image .toggle .ilogo {
+    position: absolute;
+    height: 50px;
+    width: 30px;
+    top:30%;
+    left:45%;
+    text-align: center;
+}
+
 .toggle #show , .after #show {
 	top:10px;
 	display:block;

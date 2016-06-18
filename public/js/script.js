@@ -9,20 +9,39 @@ var tomorrow = day.getFullYear()+'-'+(((day.getMonth()+1) < 10 ? "0" : "") + (da
 
 //gets recommended shows
 var recommended = angular.module('recommended',[]).controller("popular",function ($scope,$http){
-	$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
-		$scope.cart = data;
-	})
+	$scope.empty=function() {
 
-});
+		var value=$.trim($("#search").val());
+
+		if(value.length==0)
+		{
+			$http.get('http://localhost:3000/explore').success(function(data) {
+				$scope.cart = data;
+			});
+		}
+	};
+
+		$scope.submit = function() {
+
+			$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
+				$scope.cart = data;
+			})
+
+		};
+		$http.get('http://localhost:3000/explore').success(function(data) {
+			$scope.cart = data;
+		})
+
+	});
 
 
-var airing = angular.module('airing',[]);
+			var airing = angular.module('airing',[]);
 
 airing.controller("today",function ($scope,$http){		//index.html page
 
 	
 	//getting today's schedule
-	$http.get('https://tvtime.herokuapp.com/airing?date='+today).success(function(data) {
+	$http.get('http://localhost:3000/airing?date='+today).success(function(data) {
 		$scope.cart = removeDbl(data);
 		
 
@@ -31,7 +50,7 @@ airing.controller("today",function ($scope,$http){		//index.html page
 airing.controller("tomorrow",function ($scope,$http){	//index.html page
 	
 	//getting tomorrow's schedule
-	$http.get('https://tvtime.herokuapp.com/airing?date='+tomorrow).success(function(data) {
+	$http.get('http://localhost:3000/airing?date='+tomorrow).success(function(data) {
 		
 		$scope.cart = removeDbl(data);
 	})});
@@ -43,7 +62,7 @@ airing.directive('sibs', function($http) { //open/close hidden show div and chec
 				scope.text = attrs["sibs"];
 				if(element.parent().children('p').hasClass('after'))
 				{
-					$http.get('https://tvtime.herokuapp.com/checkShow?userID=1&&showID='+scope.text).success(function(data) {
+					$http.get('http://localhost:3000/checkShow?userID=1&&showID='+scope.text).success(function(data) {
 						
 						if(data!="null")
 							element.parent().children('p').children('button')[0].innerHTML='Show is being followed';
@@ -72,7 +91,7 @@ airing.directive('youtube', function($http) { // future use
 		link: function(scope, element, attrs) {
 			element.bind('click', function() {
 				var target = element[0].querySelector('#show');
-				$http.get('https://tvtime.herokuapp.com/youtube?name='+target.innerHTML).success(function(data) {
+				$http.get('http://localhost:3000/youtube?name='+target.innerHTML).success(function(data) {
 
 
 				});
@@ -95,7 +114,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 					var showImg=arr[2];
 					if(element.html()=="Add to Download List") {
 						element[0].innerHTML="Show is being followed";
-						$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+showName+'&&id='+showID+
+						$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
 							'&&img='+showImg+'&&user=1').success(function(data) {
 
 
@@ -106,7 +125,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 						}
 						else {
 							element[0].innerHTML="Add to Download List";
-							$http.get('https://tvtime.herokuapp.com/removeUserShow?name='+showName+'&&id='+showID+
+							$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
 								'&&user=1').success(function(data) {
 
 
@@ -123,26 +142,41 @@ var list = angular.module('List',[]);
 list.controller("listData",function ($scope,$http){
 
 //get user's  shows
-	$http.get('https://tvtime.herokuapp.com/getUserShows?userID='+1).success(function(data) {
-		var arr=[];
-		var name=[];
-		for(var i in data)
+$http.get('http://localhost:3000/getUserShows?userID='+1).success(function(data) {
+	var arr=[];
+	var name=[];
+	for(var i in data)
+	{
+		for(var j in data[i].shows)
 		{
-			for(var j in data[i].shows)
+			if(data[i].shows[j].active==true)
 			{
-				if(data[i].shows[j].active==true)
-				{
-					
-					arr.push(data[i].shows[j]);
-				}
+
+				arr.push(data[i].shows[j]);
 			}
 		}
+	}
 
-		$scope.shows =arr;
-		
+	$scope.shows =arr;
 
-	})});
 
+})});
+
+
+airing.directive('toggle', function(){
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs){
+			$(element).hover(function(){
+                // on mouseenter
+                $(element).tooltip('show');
+            }, function(){
+                // on mouseleave
+                $(element).tooltip('hide');
+            });
+		}
+	};
+});
 
 
 
@@ -153,6 +187,7 @@ function removeDbl(data){
 	{
 		if(name.indexOf(data[i].show.name)==-1)
 		{
+			data[i].show.summary=data[i].show.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
 			name.push(data[i].show.name);
 			arr.push(data[i]);
 		}
@@ -188,31 +223,12 @@ window.addEventListener('scroll', detectDay, false);
 
 $(function() { //future use
 	var availableTags = [
-	"ActionScript",
-	"AppleScript",
-	"Asp",
-	"BASIC",
-	"C",
-	"C++",
-	"Clojure",
-	"COBOL",
-	"ColdFusion",
-	"Erlang",
-	"Fortran",
-	"Groovy",
-	"Haskell",
-	"Java",
-	"JavaScript",
-	"Lisp",
-	"Perl",
-	"PHP",
-	"Python",
-	"Ruby",
-	"Scala",
-	"Scheme"
+	
 	];
 	$( "#tags" ).autocomplete({
 		source: availableTags
 	});
 });
+
+
 
