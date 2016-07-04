@@ -65,6 +65,28 @@ conn.once('open',function() {
           GInfo.removeUserShow(res,req.query.name,req.query.id,req.query.user,userM,showM); 
     });
 
+    app.get('/showdata',function(req, res){
+
+        console.log("get show "+req.query.id+" details");
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.showdata(res,req.query.id); 
+    });
+
+    app.get('/showEpisode',function(req, res){
+
+        console.log("get show "+req.query.id+" episodes for user "+req.query.user);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          GInfo.showEpisode(res,req.query.id); 
+    });
+
       app.get('/checkShow',function(req, res){
         res.header({
     'Content-Type': 'text/plain',

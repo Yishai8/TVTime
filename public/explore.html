@@ -39,7 +39,7 @@
            </li>
            <li class="active"><a href="explore.html"><img src="images/explore-logo.png" height="20px" width="30px">Explore</a>
            </li>
-           <li class="active"><a href="#"><img src="images/download-logo.png" height="20px" width="30px">Download List</a>
+           <li class="active"><a href="myShows.html"><img src="images/download-logo.png" height="20px" width="30px">Download List</a>
            </li>
            <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
@@ -54,7 +54,7 @@
    </section>
   <section><div class="ui-widget">
  <div id="sb-search" class="sb-search">
-  <form ng-submit="submit()">
+  <form ng-submit="submit()" ng-model="selection">
     <input class="sb-search-input" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
     <input class="sb-search-submit" type="submit" value="sub">
     <span class="sb-icon-search"></span>
@@ -66,11 +66,11 @@
   </section>
  </header>
  <main>
-  <section   class="ShowsScreen1">
+  <section class="ShowsScreen1">
     <ul class="image">
              <li ng-repeat="item in cart.results" class="image-container">
                  <img ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
-                 <p class="after">{{item.name}}<br><input type="radio"></input>
+                 <p class="after">{{item.name}}<br><input type="checkbox"></input>
                   <img id="ex_logo" click title={{item.overview}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
                  </p>
                                  

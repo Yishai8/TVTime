@@ -21,21 +21,21 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 		}
 	};
 
-		$scope.submit = function() {
+	$scope.submit = function() {
 
-			$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
-				$scope.cart = data;
-			})
-
-		};
-		$http.get('http://localhost:3000/explore').success(function(data) {
+		$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
 			$scope.cart = data;
 		})
 
-	});
+	};
+	$http.get('http://localhost:3000/explore').success(function(data) {
+		$scope.cart = data;
+	})
+
+});
 
 
-			var airing = angular.module('airing',[]);
+var airing = angular.module('airing',[]);
 
 airing.controller("today",function ($scope,$http){		//index.html page
 
@@ -138,13 +138,94 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 });
 
 
-var list = angular.module('List',[]);
+var list = angular.module('List',['ngTouch','ui.bootstrap']);
 list.controller("listData",function ($scope,$http){
+	var arr=[];
+	$scope.d=function(index,el){
+		$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
+			el.details =  data;
+			var castArray=[];
+			angular.forEach (el.details._embedded.cast,function(val,key){
+				castArray.push(val.person.image.medium);
 
+			});
+			
+			el.slides=castArray;
+			
+		});
+
+		return !this.showDiv;
+		
+
+	};
+
+	var div;
+	var section;
+	var plus;
+	$scope.swipdir = function (dir,index,el) { 
+		div = document.getElementById('item-'+index);
+		section = document.getElementById('section-'+index);
+		if(el.active==undefined)
+			el.active=true;
+
+		if(dir=="left")
+		{
+			if(el.active)
+			{
+				div.className="hidden_gar";
+				section.className="hidden_sec";
+			}
+		}
+		else
+		{
+			if(el.active)
+			{
+				div.className="display_gar";
+				section.className="display_sec";
+			}
+			
+		}
+	};
+
+	$scope.del = function (el,ind,showName,showID) {
+		div = document.getElementById('item-'+ind);
+		section = document.getElementById('section-'+ind);
+		plus = document.getElementById('plus-'+ind);
+		if(confirm("are you sure you want to remove this series?"))
+		{
+			div.className="hidden_gar";
+			section.className="sec_del";
+			plus.className="display_plus";
+			el.active=false;
+			$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+				'&&user=1').success(function(data) {
+
+
+				});
+
+			}
+			
+		};	
+
+		$scope.active_sec = function (el,ind,showName,showID) {
+			div = document.getElementById('item-'+ind);
+			section = document.getElementById('section-'+ind);
+			plus = document.getElementById('plus-'+ind);
+			
+			el.active=true;
+			div.className="hidden_gar";
+			section.className="hidden_sec";
+			plus.className="hidden_plus";
+			$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+				'&&img='+""+'&&user=1').success(function(data) {
+
+
+				});
+				
+			};	
 //get user's  shows
 $http.get('http://localhost:3000/getUserShows?userID='+1).success(function(data) {
-	var arr=[];
-	var name=[];
+
 	for(var i in data)
 	{
 		for(var j in data[i].shows)
@@ -160,7 +241,9 @@ $http.get('http://localhost:3000/getUserShows?userID='+1).success(function(data)
 	$scope.shows =arr;
 
 
-})});
+})
+
+});
 
 
 airing.directive('toggle', function(){
@@ -219,16 +302,4 @@ function detectDay() {	//today/tomorrow strip index.html
 	}
 }
 window.addEventListener('scroll', detectDay, false);
-
-
-$(function() { //future use
-	var availableTags = [
-	
-	];
-	$( "#tags" ).autocomplete({
-		source: availableTags
-	});
-});
-
-
 

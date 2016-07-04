@@ -121,7 +121,7 @@ a img {
    position: relative;
 }
 
-.image img {
+.image img { 
 
 	padding-bottom: 20px;
 	padding-top: 3px;
@@ -233,7 +233,7 @@ p span {
 
 /*radio button select css*/
 
-input[type='radio'] {
+input[type='checkbox'] {
     -webkit-appearance:none;
     width:20px;
     height:20px;
@@ -246,10 +246,10 @@ input[type='radio'] {
     position: absolute;
 
 }
-input[type='radio']:hover {
+input[type='checkbox']:hover {
     box-shadow:0 0 5px 0px orange inset;
 }
-input[type='radio']:before {
+input[type='checkbox']:before {
     content:'';
     display:block;
     width:100%;
@@ -258,9 +258,10 @@ input[type='radio']:before {
     background:black;
     border-radius:50%;    
 }
-input[type='radio']:checked:before {
+input[type='checkbox']:checked:before {
     background:#f6343f;
 }
+
 
 li input {
 	width: 20px;
@@ -315,6 +316,9 @@ right: 80px;
   padding: 10px;
   border: 1px solid black;
   background: black;
+  position: absolute;
+    display:block;
+    width: 100%
 }
 
 select {
@@ -340,10 +344,11 @@ select {
 
 .check-element {
 	 background: rgba(0, 0, 0, .4);
-  left:10px;
-  position: relative;
+  top:15%;
   border: 1px solid black;
-  background: black;
+  background: #f6343f;
+  position: relative;
+    display:block;
 }
 
 .myList_ul li{
@@ -355,6 +360,105 @@ select {
 	border-color:#f6343f;
 	color:white;
 	position: relative;
+}
+
+
+.hidden_gar {
+    display:none !important;
+    width:100px;
+    height: 155px;
+    left:0px;
+    background:#f6343f;
+    position: absolute;
+    top:0px;
+}
+
+
+
+
+.display_gar{
+
+    display:block !important;
+    width:20%;
+    height: 100%;
+    left:0px !important;
+    background:#f6343f;
+    position: absolute !important;
+    top:0px !important;
+}
+
+.hidden_plus {
+    display:none !important;
+    width:100px;
+    height: 155px;
+    right: 2%;
+    background:#f6343f;
+    position: absolute;
+    top:0px;
+}
+
+
+
+.display_plus{
+
+    display:block !important;
+    width:20%;
+    height: 100%;
+    right: 2%;
+    background:#f6343f;
+    position: absolute !important;
+    top:0px !important;
+    z-index: 1;
+}
+
+
+
+.sec_del {
+
+    left:0px;
+    position:relative;
+    opacity:0.3;
+}
+
+.sec {
+
+    width:100%
+}
+
+.hidden_sec {
+
+    left:0px;
+    position: relative;
+}
+
+.display_sec {
+
+    left:20%;
+    position: relative;
+
+}
+
+.img_gar {
+
+    margin:0 auto;
+    position:relative;
+    width: 45%;
+    height: 45%;
+    object-position: center;
+}
+
+.img_plus {
+
+    right:8%; 
+    position:relative;
+     width: 70%;
+    height: 50%;
+}
+
+.img_array {
+    width: 10% !important; 
+    height: 20% !important;
+    display: inline;
 }
 
 .listMain {
@@ -370,13 +474,24 @@ select {
 
 }
 
-.list-container div {
+.list-container .txt {
 	position: absolute;
 	left:50%;
 	display:inline;
 	top:30px;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+.addShows {
+    background:#f6343f;
+
+}
+
+.ShowPlus {
+
+    left:50%;
+    position: relative;
 }
 
 @media(min-width:768px){
