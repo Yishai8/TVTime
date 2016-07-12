@@ -65,6 +65,17 @@ conn.once('open',function() {
           GInfo.removeUserShow(res,req.query.name,req.query.id,req.query.user,userM,showM); 
     });
 
+    app.get('/tokensignin',function(req, res){
+        console.log("aa");
+        console.log(req.idtoken);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+          
+    });
+
     app.get('/showdata',function(req, res){
 
         console.log("get show "+req.query.id+" details");
@@ -76,7 +87,7 @@ conn.once('open',function() {
           GInfo.showdata(res,req.query.id); 
     });
 
-    app.get('/showEpisode',function(req, res){
+    /*app.get('/showEpisode',function(req, res){
 
         console.log("get show "+req.query.id+" episodes for user "+req.query.user);
         res.header({
@@ -85,7 +96,7 @@ conn.once('open',function() {
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
           GInfo.showEpisode(res,req.query.id); 
-    });
+    });*/
 
       app.get('/checkShow',function(req, res){
         res.header({
@@ -129,6 +140,17 @@ conn.once('open',function() {
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
         GInfo.search(res,req.query.query);
+
+    });
+
+       app.get('/showEpisode',function(req, res){
+        console.log("get episode details for show "+req.query.id);
+        res.header({
+    'Content-Type': 'text/plain',
+    'Access-Control-Allow-Origin' : '*',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+    'Status' :200});
+        GInfo.showEpisode(res,req.query.id,req.query.season,req.query.episode);
 
     });
 

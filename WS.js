@@ -11,9 +11,11 @@ var viewArr=module.exports=
 {
 
     getRecommended : function (res) { 
+        var rand=Math.ceil(Math.random()*30) ;
+        console.log(rand);
         var url =
         request({
-          url:'https://api.themoviedb.org/3/tv/on_the_air?api_key=fa67dde53cd1a4800f274049291de923' ,
+          url:'http://api.tvmaze.com/shows?page='+rand ,
           json: true
       }, function (error, response, body) {
 
@@ -24,10 +26,10 @@ var viewArr=module.exports=
 
     },
 
-     search : function (res,query) { 
+    search : function (res,query) { 
         var url =
         request({
-          url:'https://api.themoviedb.org/3/search/tv?query='+query+'&api_key=fa67dde53cd1a4800f274049291de923' ,
+          url:'http://api.tvmaze.com/search/shows?q='+query ,
           json: true
       }, function (error, response, body) {
 
@@ -57,26 +59,33 @@ var viewArr=module.exports=
   },
 
   insertUserShow : function (res,showName,showID,link,userID,userM,showM) {
+    var season;
+    var url =
+    request({
+      url:'http://api.tvmaze.com/shows/'+showID+'/seasons' ,
+      json: true
+  }, function (error, response, body) {
 
-    var newShow= {
-        "id": showID,
-        "name":showName,
-        "season":1,
-        "ep_id": 1,
-        "active":true,
-        "link":link
-    };
+    if (!error && response.statusCode === 200) {
+        var newShow= {
+            "id": showID,
+            "name":showName,
+            "season":body[0].number,
+            "ep_id": 1,
+            "active":true,
+            "link":link
+        };
 
-    var ShowRec= {
-        "id": showID,
-        "name":showName,
-        "viewers":1
-    };
+        var ShowRec= {
+            "id": showID,
+            "name":showName,
+            "viewers":1
+        };
 
-    userM.find({ id: userID },{ shows: { $elemMatch: { id: showID} } } ).exec(function(err,doc){
-        var d=JSON.parse(JSON.stringify(doc));
-        d.forEach(function(obj)
-        { 
+        userM.find({ id: userID },{ shows: { $elemMatch: { id: showID} } } ).exec(function(err,doc){
+            var d=JSON.parse(JSON.stringify(doc));
+            d.forEach(function(obj)
+            { 
             if(obj.shows==0) //update new show for user
             {
 
@@ -98,7 +107,7 @@ var viewArr=module.exports=
                         'shows.$.active':true          
                     }}).exec(function(err,doc){
                         console.log("show "+showID+" exists as non-active for viewer "+userID+",show reactivated");
-                
+
 
                     });
 
@@ -131,18 +140,22 @@ var viewArr=module.exports=
 
             );
 
-    });
-    
+        });
+
+
+
+        res.end();
+
+    }
+});
 
     
-    res.end();
-
 },
 
 getUserShows : function (res,userID,userM) {
 
 
- userM.find({id: userID}).exec(function(err,doc){
+   userM.find({id: userID}).exec(function(err,doc){
     res.json(doc);
 
 });
@@ -150,7 +163,7 @@ getUserShows : function (res,userID,userM) {
 
 },
 
-    showEpisode : function (res,id) { 
+    /*showEpisode : function (res,id) { 
         var url =
         request({
           url:'http://api.tvmaze.com/shows/'+id+'/seasons' ,
@@ -158,30 +171,79 @@ getUserShows : function (res,userID,userM) {
       }, function (error, response, body) {
 
         if (!error && response.statusCode === 200) {
+            console.log(body);
         res.json(body); // Print the json response
     }
 });
 
-    },
+},*/
 
 showdata : function (res,id) { 
-        var url =
-        request({
-           url:'http://api.tvmaze.com/shows/'+id+'?embed=cast' ,
-          json: true
-      }, function (error, response, body) {
+    var url =
+    request({
+     url:'http://api.tvmaze.com/shows/'+id+'?embed[]=seasons&embed[]=cast' ,
+     json: true
+ }, function (error, response, body) {
 
-        if (!error && response.statusCode === 200) {
+    if (!error && response.statusCode === 200) {
         res.json(body); // Print the json response
     }
 });
 
-    },
+},
+
+showEpisode : function (res,id,season,ep_id) { 
+    var url =
+    request({
+     url:'http://api.tvmaze.com/shows/'+id+'/episodebynumber?season='+season+'&number='+ep_id ,
+     json: true
+ }, function (error, response, body) {
+    if(error) console.log(error);
+    if (!error && response.statusCode === 200) {
+
+        if(body.image==null || body.summary==null || body.summary=='')
+        {  
+            var url =
+            request({
+             url:'http://api.tvmaze.com/shows/'+id+'?embed=cast' ,
+             json: true
+         }, function (error, response, Newbody) {
+
+            if (!error && response.statusCode === 200) {
+         // Print the json response
+         if(body.image==null &&(body.summary==null || body.summary=='') ) //if episode data is missing fill from show
+         {
+            body.image=Newbody.image;
+            body.summary=Newbody.summary;
+        } // Print the json response
+        else
+            if(body.image==null)
+            {
+                body.image=Newbody.image;
+            }
+            else
+                body.summary=Newbody.summary;
+        }
+        res.json(body); // Print the json response
+        
+
+    });
+
+            
+        }
+        else
+        {
+         res.json(body); 
+     }
+ }
+});
+
+},
 
 removeUserShow : function (res,showName,showID,userID,userM,showM) {
 
 
- userM.update(
+   userM.update(
     {id: userID, 'shows.id': showID}, 
     {'$set': {
         'shows.$.active':false          
@@ -256,4 +318,4 @@ removeUserShow : function (res,showName,showID,userID,userM,showM) {
 })
     }
 
-        };
+};

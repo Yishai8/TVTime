@@ -18,6 +18,11 @@
    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="437453108837-mve7kprdb6u5mbkv9jvtm05bk11bm14t.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <script src="js/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -43,20 +48,25 @@
            </li>
            <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
+           <li class="active"><div id="gSignInWrapper">
+    <div id="customBtn" class="customGPlusSignIn">
+      <img src="images/google-logo.png" height="20px" width="30px">
+      <span id="name" class="buttonText">Login with Google</span>
+    </div>
+  
            </li>
          </ul>
        </div>
      </div>
      <span id="pageTitle">Explore</span>
-     <img id="mag" src="images/mag.png">
+     <img id="mag" src="images/mag.png" ng-click="showme()">
      <img id="logo" src="images/logo.png">
    </section>
   <section><div class="ui-widget">
- <div id="sb-search" class="sb-search">
+ <div ng-show="size">
   <form ng-submit="submit()" ng-model="selection">
     <input class="sb-search-input" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
-    <input class="sb-search-submit" type="submit" value="sub">
+    <input class="sb-search-submit" type="submit" value="submit">
     <span class="sb-icon-search"></span>
   </form>
 </div>
@@ -68,10 +78,10 @@
  <main>
   <section class="ShowsScreen1">
     <ul class="image">
-             <li ng-repeat="item in cart.results" class="image-container">
-                 <img ng-src="https://image.tmdb.org/t/p/w780{{item.poster_path}}">
+              <li ng-repeat="item in cart" class="list_explore">
+                 <img ng-src="{{item.image.medium}}" class="list_image">
                  <p class="after">{{item.name}}<br><input type="checkbox"></input>
-                  <img id="ex_logo" click title={{item.overview}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
+                  <img id="ex_logo" click title={{item.summary}}  toggle data-toggle="tooltip" data-placement="left" src="images/i-logo.png"></img>
                  </p>
                                  
                    

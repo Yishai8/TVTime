@@ -15,6 +15,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="437453108837-mve7kprdb6u5mbkv9jvtm05bk11bm14t.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <script src="js/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -40,7 +45,12 @@
            </li>
            <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
+           <li class="active"><div id="gSignInWrapper">
+    <div id="customBtn" class="customGPlusSignIn">
+      <img src="images/google-logo.png" height="20px" width="30px">
+      <span id="name" class="buttonText">Login with Google</span>
+    </div>
+  </div>
            </li>
          </ul>
        </div>
@@ -58,7 +68,7 @@
   <section ng-controller="today" class="ShowsScreen" >
     <ul class="image">
              <li ng-repeat="item in cart" class="image-container">
-                 <img width="300px" height="350px" sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
+                 <img sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
                  <p sibs="{{item.show.id}}" class="after">S{{item.season}}E{{item.number}}<br><span id="show">{{item.show.name}}</span> 
                   <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span><img click title={{item.show.summary}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
                  <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}'>Add to Download List</button></p>
@@ -70,7 +80,7 @@
   <section ng-controller="tomorrow" class="ShowsScreen">
     <ul class="image">
              <li ng-repeat="item in cart" class="image-container">
-                 <img width="300px" height="350px" sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
+                 <img sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
                  <p sibs="{{item.show.id}}" class="after">S{{item.season}}E{{item.number}}<br><span id="show">{{item.show.name}}</span> 
                   <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span><img click title={{item.show.summary}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
                  <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}'>Add to Download List</button></p>

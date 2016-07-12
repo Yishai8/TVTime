@@ -13,13 +13,18 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-touch.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-touch.min.js"></script>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <meta name="google-signin-scope" content="profile email">
+  <meta name="google-signin-client_id" content="437453108837-mve7kprdb6u5mbkv9jvtm05bk11bm14t.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <script src="js/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -45,40 +50,89 @@
            </li>
            <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
-           </li>
-         </ul>
-       </div>
-     </div>
-     <span id="pageTitle">My List</span>
-     <img id="logo" src="images/logo.png">
-   </section>
+           <li class="active"><div id="gSignInWrapper">
+            <div id="customBtn" class="customGPlusSignIn">
+              <img src="images/google-logo.png" height="20px" width="30px">
+              <span id="name" class="buttonText">Login with Google</span>
+            </div>
+
+          </li>
+          
+        </ul>
+      </div>
+    </div>
+    <span id="pageTitle">My List</span>
+    <img id="logo" src="images/logo.png">
+  </section>
   <section >
     <p id="strip"></p>
   </section>
- </header>
- <main >
+</header>
+<main >
   <section  ng-controller="listData" class="ShowsScreen1">
     <ul class="myList_ul">
-             <li  ng-repeat="item in shows"  class="list-container" ng-swipe-right="swipdir('right',$index,this)" ng-swipe-left="swipdir('left',$index,this)">
-               <div id="{{'item-'+$index}}"  class="hidden_gar"><img class="img_gar" ng-click="del(this,$index,item.name,item.id)" src="images/gar.png" ></div>
-                <div id="{{'plus-'+$index}}"  class="hidden_plus"><img class="img_plus" ng-click="active_sec(this,$index,item.name,item.id)" src="images/plus.png"></div>
-               <section id="{{'section-'+$index}}" class="sec">  
-                <div class="txt" >Current position:<br>S{{item.season}}E{{item.ep_id}}<br><span id="show">{{item.name}}</span> </div>
-                <img ng-click="showDiv = d($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
-  
-<div class="check-element animate-show" ng-show="showDiv">
-   <p>season<select ng-model="selectedSeason" ng-options="item.number for item in selectedSeason"></select>
-episode<select  ng-model="selectedEpisode" ng-options="item.episodeOrder for item in selectedSeason"> </select>
-  </p>
-  </div>
-                 </section>
-             </li>
-             <div class="addShows"><a href="explore.html"><img class="ShowPlus" src="images/plus.png"></a></div>
-  
-           </ul>
+     <li  ng-repeat="item in shows"  class="list-container" ng-swipe-right="swipdir('right',$index,this)" ng-swipe-left="swipdir('left',$index,this)">
+       <div id="{{'item-'+$index}}"  class="hidden_gar"><img class="img_gar" ng-click="del(this,$index,item.name,item.id)" src="images/gar.png" ></div>
+       <div id="{{'plus-'+$index}}"  class="hidden_plus"><img class="img_plus" ng-click="active_sec(this,$index,item.name,item.id)" src="images/plus.png"></div>
+       <section id="{{'section-'+$index}}" class="sec">  
+        <div class="txt" >Current position:<br>S{{item.season}}E{{item.ep_id}}<br><span id="show">{{item.name}}</span> </div>
+        <img ng-click="showDiv = d($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
 
-  </section>
+        <div class="check-element animate-show" ng-show="showDiv" ng-model="this.episode">
+          <p>Overwiew:<br><br>{{episode.summary}}<br><br>
+          </p>
+          <img src={{episode.image.medium}}>
+          <p>season<select ng-model="selectedSeason" ng-options="item.number for item in Season"></select>
+
+            episode<select  ng-model="selectedEpisode" ng-options="item.episodeOrder for item in selectedSeason" | range:item.episodeOrder> </select>
+          </p>
+        </div>
+      </section>
+    </li>
+    <div class="addShows"><a href="javascript:void(0)"><img ng-click="openNav()" class="ShowPlus" src="images/plus.png"></a></div>
+    <div id="myNav" class="overlay">
+      <a href="javascript:void(0)" class="closebtn" ng-click="closeNav()">×</a>
+      <div class="overlay-content">
+       <span class="AddShow">Add show</span>
+       <button  id="searchAdd" data-ng-click="addShowsSearch()">Add</button>
+       <div class="ui-widget extra">
+         <div class="sb-search">
+          <form ng-submit="submit()" ng-model="selection">
+            <input type="image" src="images/mag.png" id="overlay_mg">
+            <input class="sb-search-input"  ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
+            <span class="sb-icon-search"></span>
+          </form>
+        </div>
+        <ul class="image">
+         <li ng-repeat="item in cart" class="list_explore">
+           <img ng-src="{{item.image.medium}}" class="list_image">
+           <p class="after">{{item.name}}<br><input type="checkbox" ></input>
+            <img id="ex_logo" click title={{item.summary}}  toggle data-toggle="tooltip" data-placement="left" src="images/i-logo.png"></img>
+          </p>
+
+
+        </li>
+      </ul>
+    </ul>
+
+  </div>
+</div>
+</div>
+
+
+
+</ul>
+
+</section>
+</div>
+
+</div>
+
+<!-- Use any element to open/show the overlay navigation menu -->
+
+</ul>
+
+</section>
 </main>
 </div>
 </body>

@@ -21,6 +21,11 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+   <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="437453108837-mve7kprdb6u5mbkv9jvtm05bk11bm14t.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <script src="js/script.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -46,7 +51,12 @@
            </li>
            <li class="active"><a href="myList.html"><img src="images/my-list-logo.png" height="20px" width="30px">My List</a>
            </li>
-           <li class="active"><a href="#"><img src="images/settings-logo.png" height="20px" width="30px">Settings</a>
+           <li class="active"><div id="gSignInWrapper">
+    <div id="customBtn" class="customGPlusSignIn">
+      <img src="images/google-logo.png" height="20px" width="30px">
+      <span id="name" class="buttonText">Login with Google</span>
+    </div>
+  
            </li>
          </ul>
        </div>
@@ -73,13 +83,14 @@
   Cast:
  </p>
  <img ng-repeat="slide in slides" class="img_array" src={{slide}}>
+ 
   </div>
                  </section>
              </li>
            </ul>
 
   </section>
-</main>
+</main> 
 </div>
 </body>
 </html>
