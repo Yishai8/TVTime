@@ -181,7 +181,7 @@ a img {
     text-align: center;
     display: block;
     background: rgba(0, 0, 0, .6);
-    width: 300px;
+    width: 100%;
     height: 250px;
 
 }
@@ -203,11 +203,12 @@ p button  {
 	margin:0 auto;
 	position:absolute;
 	bottom:10%;
-	width: 100%;
+	width: 80%;
+  margin-left:10.003%;
 	height: 50px;
 	background: #f6343f;
 	border: 0;
-	font-size: 20px;
+	font-size: 1em;
 	object-position: center;
 }
 
@@ -314,8 +315,11 @@ li input {
 
 /*search bar*/
 .ui-widget {
-	position: relative;
-	top:50px;
+	position: absolute;
+	top:70px;
+  z-index:10;
+  font-size:1em;
+  padding-left:5px;
 }
 
 .extra {
@@ -485,6 +489,7 @@ select {
     background:#f6343f;
     position: absolute !important;
     top:0px !important;
+    z-index:10;
 }
 
 .hidden_plus {
@@ -502,9 +507,9 @@ select {
 .display_plus{
 
     display:block !important;
-    width:20%;
+    width:15%;
     height: 100%;
-    right: 2%;
+    right: 0%;
     background:#f6343f;
     position: absolute !important;
     top:0px !important;
@@ -533,7 +538,7 @@ select {
 
 .display_sec {
 
-    left:20%;
+    padding-left:20%;
     position: relative;
 
 }
@@ -550,11 +555,9 @@ select {
 }
 
 .img_plus {
-
-    right:8%; 
     position:relative;
-    width: 70%;
-    height: 50%;
+    width: 50%;
+    height: 45%;
 }
 
 .img_array {
@@ -583,6 +586,7 @@ select {
 	top:30px;
 	font-size: 1.2em;
 	font-weight: bold;
+  margin-right:15%;
 }
 
 .addShows {
@@ -654,6 +658,10 @@ select {
 .sb-search {
 
     margin-bottom: 20px !important;
+}
+
+ul nav.navbar-nav{
+  font-size:1em;
 }
 
 @media screen and (max-height: 450px) {
@@ -737,7 +745,6 @@ ul.nav.navbar-nav li{width:20%;font-size:1em;}
     width:60px;
     top:8px;
     z-index:1;
-
 }
 
 }
