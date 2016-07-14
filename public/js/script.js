@@ -567,4 +567,4 @@ $( document ).ready(function(){
 		document.getElementById('name').innerText = "Signed in: " +localStorage.name;
 	else
 		document.getElementById('name').innerText = "Login with Google";
-});	
+});
