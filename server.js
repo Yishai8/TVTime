@@ -11,14 +11,14 @@ var conn=mongoose.connection;
 var user = require ('./user');
 var show = require ('./show');
 var showM= mongoose.model('Show',show);
-var userM= mongoose.model('User',user);
+var userM= mongoose.model('User',user); 
+
 conn.on('error', function(err) {
     console.log('connection error: ' + err);
  });
 
 conn.once('open',function() {
      console.log('connected successfuly to the remote DB');
- 
     app.get('/airing',function(req, res){
 
         console.log("Airing list "+req.query.date);

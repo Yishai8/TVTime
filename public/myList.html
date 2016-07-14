@@ -76,7 +76,7 @@
        <div id="{{'plus-'+$index}}"  class="hidden_plus"><img class="img_plus" ng-click="active_sec(this,$index,item.name,item.id)" src="images/plus.png"></div>
        <section id="{{'section-'+$index}}" class="sec">  
         <div class="txt" >Current position:<br>S{{item.season}}E{{item.ep_id}}<br><span id="show">{{item.name}}</span> </div>
-        <img ng-click="showDiv = d($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
+        <img ng-click="showDiv = opendiv($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
 
         <div class="check-element animate-show" ng-show="showDiv" ng-model="this.episode">
           <p>Overwiew:<br><br>{{episode.summary}}<br><br>

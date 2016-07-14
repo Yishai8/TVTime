@@ -76,7 +76,7 @@
                 <div id="{{'plus-'+$index}}"></div>
                <section id="{{'section-'+$index}}" class="sec">  
                 <div class="txt" ><span id="show">{{item.name}}</span> </div>
-                <img ng-click="showDiv = d($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
+                <img ng-click="showDiv = opendiv($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
   
 <div class="check-element animate-show" ng-show="showDiv" ng-model="this.details">
    <p>Overwiew:<br><br>{{details.summary}}<br><br>

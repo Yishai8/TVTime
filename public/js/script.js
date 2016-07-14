@@ -22,7 +22,7 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 				{
 					if(!$scope.size)
 						$(".sb-search-input").val('');
-					$http.get('http://localhost:3000/explore').success(function(data) {
+					$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 						$scope.cart = limitRes(data);
 					});
 				}
@@ -31,12 +31,12 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 
 		$scope.submit = function() { console.log("here");
 		if($scope.Oldkeys>0)
-			$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
+			$http.get('https://tvtime.herokuapp.com/search?query='+this.text).success(function(data) {
 				$scope.cart = searchRes(data);
 			})
 
 	};
-	$http.get('http://localhost:3000/explore').success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 		$scope.cart = limitRes(data);
 	});
 
@@ -70,7 +70,7 @@ airing.controller("today",function ($scope,$http){		//index.html page
 
 	
 	//getting today's schedule
-	$http.get('http://localhost:3000/airing?date='+today).success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/airing?date='+today).success(function(data) {
 		$scope.cart = removeDbl(data);
 		
 
@@ -79,7 +79,7 @@ airing.controller("today",function ($scope,$http){		//index.html page
 airing.controller("tomorrow",function ($scope,$http){	//index.html page
 	
 	//getting tomorrow's schedule
-	$http.get('http://localhost:3000/airing?date='+tomorrow).success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/airing?date='+tomorrow).success(function(data) {
 		
 		$scope.cart = removeDbl(data);
 	})});
@@ -91,7 +91,7 @@ airing.directive('sibs', function($http) { //open/close hidden show div and chec
 				scope.text = attrs["sibs"];
 				if(element.parent().children('p').hasClass('after'))
 				{
-					$http.get('http://localhost:3000/checkShow?userID=1&&showID='+scope.text).success(function(data) {
+					$http.get('https://tvtime.herokuapp.com/checkShow?userID=1&&showID='+scope.text).success(function(data) {
 						
 						if(data!="null")
 							element.parent().children('p').children('button')[0].innerHTML='Show is being followed';
@@ -120,7 +120,7 @@ airing.directive('youtube', function($http) { // future use
 		link: function(scope, element, attrs) {
 			element.bind('click', function() {
 				var target = element[0].querySelector('#show');
-				$http.get('http://localhost:3000/youtube?name='+target.innerHTML).success(function(data) {
+				$http.get('https://tvtime.herokuapp.com/youtube?name='+target.innerHTML).success(function(data) {
 
 
 				});
@@ -143,7 +143,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 					var showImg=arr[2];
 					if(element.html()=="Add to Download List") {
 						element[0].innerHTML="Show is being followed";
-						$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+						$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+showName+'&&id='+showID+
 							'&&img='+showImg+'&&user=1').success(function(data) {
 
 
@@ -154,7 +154,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 						}
 						else {
 							element[0].innerHTML="Add to Download List";
-							$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+							$http.get('https://tvtime.herokuapp.com/removeUserShow?name='+showName+'&&id='+showID+
 								'&&user=1').success(function(data) {
 
 
@@ -189,7 +189,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 		angular.forEach(isChecked, function(value, index) {
 			if(value.checked)
 			{
-				$http.get('http://localhost:3000/insertUserShow?name='+$scope.cart[index].name+'&&id='+$scope.cart[index].id+
+				$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+$scope.cart[index].name+'&&id='+$scope.cart[index].id+
 					'&&img='+$scope.cart[index].image.medium+'&&user=1').success(function(data) {
 						console.log("show "+$scope.cart[index].name+" added successfully");
 
@@ -203,7 +203,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 
 
 	var arr=[];
-	$scope.d=function(index,el){
+	$scope.opendiv=function(index,el){
 
 		function createArray(length) {
 			var arr = new Array(length || 0),
@@ -215,14 +215,14 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 			}        
 			return arr;
 		};		
-		$http.get('http://localhost:3000/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
+		$http.get('https://tvtime.herokuapp.com/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
 			+arr[index].ep_id).success(function(data) {
 				data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
 				el.episode=data;
 			});
 
 
-			$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
+			$http.get('https://tvtime.herokuapp.com/showdata?id='+arr[index].id).success(function(data) {
 				data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
 				el.details =  data;
 				var castArray=[];
@@ -290,7 +290,7 @@ episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" 
 				section.className="sec_del";
 				plus.className="display_plus";
 				el.active=false;
-				$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+				$http.get('https://tvtime.herokuapp.com/removeUserShow?name='+showName+'&&id='+showID+
 					'&&user=1').success(function(data) {
 
 
@@ -309,7 +309,7 @@ episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" 
 				div.className="hidden_gar";
 				section.className="hidden_sec";
 				plus.className="hidden_plus";
-				$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+				$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+showName+'&&id='+showID+
 					'&&img='+""+'&&user=1').success(function(data) {
 
 
@@ -317,7 +317,7 @@ episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" 
 
 				};	
 //get user's  shows
-$http.get('http://localhost:3000/getUserShows?userID='+1).success(function(data) {
+$http.get('https://tvtime.herokuapp.com/getUserShows?userID='+1).success(function(data) {
 
 	for(var i in data)
 	{
@@ -348,7 +348,7 @@ $scope.Oldkeys=0; //if field already empty
 			if($scope.Newkeys==0 &&$scope.Oldkeys>0) //check if input was already empty on keyup(no refresh)
 			{
 
-				$http.get('http://localhost:3000/explore').success(function(data) {
+				$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 					$scope.cart = limitRes(data);
 
 				});
@@ -357,49 +357,49 @@ $scope.Oldkeys=0; //if field already empty
 	};
 
 	$scope.submit = function() {
-	var value=$.trim($("#search").val());
-console.log("old"+$scope.Oldkeys);
-console.log("new"+$scope.Newkeys);
-	if($scope.Oldkeys>=0 && $scope.Newkeys>0)
-		$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
-			$scope.cart = searchRes(data);
-		})
+		var value=$.trim($("#search").val());
+		console.log("old"+$scope.Oldkeys);
+		console.log("new"+$scope.Newkeys);
+		if($scope.Oldkeys>=0 && $scope.Newkeys>0)
+			$http.get('https://tvtime.herokuapp.com/search?query='+this.text).success(function(data) {
+				$scope.cart = searchRes(data);
+			})
 
-};
-$http.get('http://localhost:3000/explore').success(function(data) {
-	$scope.cart = limitRes(data);
-});
-
-$scope.size=true;
-
-$scope.showme = function()
-{
-	$scope.size=!$scope.size;	
-	$scope.empty();
-};
-
-$scope.openNav=function () {
-	document.getElementById("myNav").style.height = "100%";
-};
-
-$scope.closeNav=function() {
-	document.getElementById("myNav").style.height = "0%";
-	$(".sb-search-input").val('');
-	$scope.empty();
-};
-
-
-$window.onresize = function(event) {
-	$timeout(function() {
-		if($window.innerWidth<768)
-		{
-
-			$scope.size=false;
-		}
-		else
-			$scope.size=true;
+	};
+	$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
+		$scope.cart = limitRes(data);
 	});
-};
+
+	$scope.size=true;
+
+	$scope.showme = function()
+	{
+		$scope.size=!$scope.size;	
+		$scope.empty();
+	};
+
+	$scope.openNav=function () {
+		document.getElementById("myNav").style.height = "100%";
+	};
+
+	$scope.closeNav=function() {
+		document.getElementById("myNav").style.height = "0%";
+		$(".sb-search-input").val('');
+		$scope.empty();
+	};
+
+
+	$window.onresize = function(event) {
+		$timeout(function() {
+			if($window.innerWidth<768)
+			{
+
+				$scope.size=false;
+			}
+			else
+				$scope.size=true;
+		});
+	};
 
 });
 
@@ -519,12 +519,15 @@ function attachSignin(element) {
 			var id_token = googleUser.getAuthResponse().id_token;
 			$.ajax({
 				type: "GET",
-				url: "http://localhost:3000/tokensignin?idtoken="+googleUser
+				url: "https://tvtime.herokuapp.com/tokensignin?idtoken="+googleUser
 			});
 			if(!isEmpty(googleUser))
 			{
 				document.getElementById('name').innerText = "Signed in: " +
 				googleUser.getBasicProfile().getName();
+				localStorage.login="ok";
+				localStorage.name=googleUser.getBasicProfile().getName();
+				window.location.href="./index.html";
 			}
 			else
 			{
@@ -539,6 +542,8 @@ function attachSignin(element) {
 function signOut() {
 	var auth2 = gapi.auth2.getAuthInstance();
 	auth2.signOut().then(function () {
+		localStorage.login="out";
+		localStorage.name="";
 		console.log('User signed out.');
 		document.getElementById('name').innerText = "Login with Google";
 	});
@@ -556,4 +561,10 @@ startApp();
 
 
 
+$( document ).ready(function(){
 
+	if(localStorage.login=="ok")
+		document.getElementById('name').innerText = "Signed in: " +localStorage.name;
+	else
+		document.getElementById('name').innerText = "Login with Google";
+});	
