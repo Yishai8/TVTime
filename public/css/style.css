@@ -39,9 +39,6 @@ main{
 
 }
 
-.but {
-    display:none !important;
-}
 
 div.container{padding-right:0px;padding-left:0px;margin-left: 0px;margin-right: 0px;width:100%;}
 
@@ -747,7 +744,7 @@ ul nav.navbar-nav{
 
 div.navbar.navbar-inverse.navbar-fixed-top{width:90%;background: transparent;border-bottom:0px;}
 ul.nav.navbar-nav{width:100%;}
-ul.nav.navbar-nav li{width:20%; font-size:1.2vw;}
+ul.nav.navbar-nav li{width:20%; font-size:1.3vw;}
 .g-signin2 div {
     width: 0% !important;
 }
@@ -829,6 +826,9 @@ display:none;
 .ui-widget-small {
 
 display:none;
+}
+.navbar-collapse.collapse.in{
+  margin-top:0px !important;
 }
 
 }
