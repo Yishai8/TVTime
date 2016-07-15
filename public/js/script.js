@@ -498,7 +498,7 @@ function attachSignin(element) {
 					localStorage.sub=res;
 					console.log(googleUser);
 					window.location.href="./index.html";
-
+					window.location.assign("./index.html");
 				});
 				
 			}
