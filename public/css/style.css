@@ -84,6 +84,14 @@ nav.navbar-nav li{
 	padding-left: :25px;
 }
 
+.navbar-collapse.collapsing{
+  margin-top:9px;
+}
+
+.navbar-collapse.collapse.in{
+  margin-top:9px;
+}
+
 /*END Menu CSS*/
 
 a img {
@@ -461,6 +469,11 @@ select {
     #customBtn:hover {
       cursor: pointer;
     }
+    #customBtn img{
+      position:relative;
+      top:9px;
+      right:4px;
+    }
     span.label {
       font-family: serif;
       font-weight: normal;
@@ -475,7 +488,10 @@ select {
     span.buttonText {
       display: inline-block;
       vertical-align: middle;
-      font-size: 14px;
+      font-size: 1em;
+      position:relative;
+      top:10px;
+      right:3px;
       /* Use the Roboto font that is loaded in the <head> */
       font-family: 'Roboto', sans-serif;
     }
@@ -731,7 +747,7 @@ ul nav.navbar-nav{
 
 div.navbar.navbar-inverse.navbar-fixed-top{width:90%;background: transparent;border-bottom:0px;}
 ul.nav.navbar-nav{width:100%;}
-ul.nav.navbar-nav li{width:20%;font-size:1em;}
+ul.nav.navbar-nav li{width:20%; font-size:1.2vw;}
 .g-signin2 div {
     width: 0% !important;
 }
@@ -748,6 +764,11 @@ ul.nav.navbar-nav li{width:20%;font-size:1em;}
     #customBtn:hover {
       cursor: pointer;
     }
+    #customBtn img{
+      position:relative;
+      top:0px;
+    }
+
     span.label {
       font-family: serif;
       font-weight: normal;
@@ -762,8 +783,11 @@ ul.nav.navbar-nav li{width:20%;font-size:1em;}
     span.buttonText {
       display: inline-block;
       vertical-align: middle;
-     padding: 15px 15px 15px 15px;
-      font-size: 14px;
+      position:relative;
+      top:0px;
+      right:5px;
+      padding: 15px 0px 15px 5px;
+      font-size: 1em;
       /* Use the Roboto font that is loaded in the <head> */
       font-family: 'Roboto', sans-serif;
     }
