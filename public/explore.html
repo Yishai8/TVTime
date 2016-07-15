@@ -87,7 +87,7 @@
     <ul class="image">
               <li ng-repeat="item in cart" class="list_explore">
                  <img ng-src="{{item.image.medium}}" class="list_image">
-                 <p class="after">{{item.name}}<br><input type="checkbox"></input>
+                 <p class="after">{{item.name}}<br><input type="checkbox" ng-show="login"></input>
                   <img id="ex_logo" click title={{item.summary}}  toggle data-toggle="tooltip" data-placement="left" src="images/i-logo.png"></img>
                  </p>
                                  

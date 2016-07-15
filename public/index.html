@@ -71,7 +71,7 @@
                  <img sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
                  <p sibs="{{item.show.id}}" class="after">S{{item.season}}E{{item.number}}<br><span id="show">{{item.show.name}}</span> 
                   <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span><img click title={{item.show.summary}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
-                 <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}'>Add to Download List</button></p>
+                 <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}' ng-show="login">Add to Download List</button></p>
 
              </li>
            </ul>
@@ -83,7 +83,7 @@
                  <img sibs="{{item.show.id}}" ng-src="{{item.show.image.original}}">
                  <p sibs="{{item.show.id}}" class="after">S{{item.season}}E{{item.number}}<br><span id="show">{{item.show.name}}</span> 
                   <span>Ratings:{{item.show.rating.average || 'Unknown'}}</span><img click title={{item.show.summary}}  toggle data-toggle="tooltip" class="ilogo" data-placement="left" src="images/i-logo.png"></img>
-                 <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}'>Add to Download List</button></p>
+                 <button click='{{item.show.id}},{{item.show.name}},{{item.show.image.medium}}' ng-show="login">Add to Download List</button></p>
 
              </li>
            </ul>

@@ -8,7 +8,15 @@ day.setDate(day.getDate() + numberOfDaysToAdd);
 var tomorrow = day.getFullYear()+'-'+(((day.getMonth()+1) < 10 ? "0" : "") + (day.getMonth()+1))+'-'+(((day.getDate()) < 10 ? "0" : "") + (day.getDate()));
 
 //gets recommended shows
-var recommended = angular.module('recommended',[]).controller("popular",function ($scope,$http,$window, $timeout){
+var recommended = angular.module('recommended',[]).controller("popular",function ($scope,$http,$window, $timeout,$document){
+	
+	if(localStorage.sub=="" || localStorage.sub==undefined ||localStorage.sub=="undefined")
+	{
+		$scope.login=false;
+	}
+	else
+		$scope.login=true;
+
 	$scope.Oldkeys=0; //if field already empty
 		$scope.Newkeys=0; //if field already empty
 		
@@ -67,15 +75,13 @@ airing.directive('sibs', function($http) { //open/close hidden show div and chec
 		link: function(scope, element, attrs) {
 			element.bind('click', function() {
 				scope.text = attrs["sibs"];
-				if(localStorage.sub=="" || localStorage.sub==undefined)
-				{
-					var elem=element.parent().children('p').children('button')[0];
-
-					elem.className='but';
-				}
+				if(localStorage.sub=="" || localStorage.sub==undefined ||localStorage.sub=="undefined")		
+					scope.login=false;
+				else
+					scope.login=true;
 				if(element.parent().children('p').hasClass('after'))
 				{
-					if(localStorage.sub!="" && localStorage.sub!="undefined")
+					if(localStorage.sub!="" && localStorage.sub!="undefined" && localStorage.sub!=undefined)
 					{ 
 						$http.get('http://localhost:3000/checkShow?userID='+parseInt(localStorage.sub)+'&&showID='+scope.text).success(function(data) {
 
@@ -129,20 +135,21 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 					var showName=arr[1];
 					var showImg=arr[2];
 					if(element.html()=="Add to Download List") {
-						element[0].innerHTML="Show is being followed";
-						$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
-							'&&img='+showImg+'&&user='+parseInt(localStorage.sub)).success(function(data) {
 
+						if(localStorage.sub!="" && localStorage.sub!=undefined && localStorage!="undefined") {
+							$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+								'&&img='+showImg+'&&user='+parseInt(localStorage.sub)).success(function(data) {
+									element[0].innerHTML="Show is being followed";
+									//elem.className='but';
+								});
 
-							});
-
-
+							}
 
 						}
 						else {
-							element[0].innerHTML="Add to Download List";
 							$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
 								'&&user='+parseInt(localStorage.sub)).success(function(data) {
+									element[0].innerHTML="Add to Download List";
 
 
 								});
@@ -168,8 +175,13 @@ list.filter('range', function() {
 });
 
 list.controller("listData",function ($scope,$http,$window, $timeout){
+	if(localStorage.sub=="" || localStorage.sub==undefined ||localStorage.sub=="undefined")		
+					$scope.login=false;
+				else
+					$scope.login=true;
+				
 	$scope.addShowsSearch=function()
-	{
+	{	
 		var result = document.getElementsByClassName("image");
 		var wrappedResult = angular.element(result);
 		var isChecked=wrappedResult.children().find("p input");
