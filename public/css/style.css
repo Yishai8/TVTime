@@ -3,6 +3,10 @@
    padding :0;
 }
 
+html {
+    background: black;
+}
+
 article, header, main, nav, footer, aside, section,select {
 	display: block;
 }
@@ -32,6 +36,11 @@ header {
 main{
 	position:relative;
 	top:100px;
+
+}
+
+.but {
+    display:none !important;
 }
 
 div.container{padding-right:0px;padding-left:0px;margin-left: 0px;margin-right: 0px;width:100%;}
@@ -227,6 +236,29 @@ p button  {
     display: inline;
 }
 
+.ui-widget-small {
+    display: inline;
+    position: absolute;
+    top:10px;
+    right:18%;
+  z-index:10;
+  font-size:1em;
+  padding-left:5px;
+}
+
+.ui-widget1 {
+    display: block;
+    position: absolute;
+    top:70px;
+  z-index:10;
+  font-size:1em;
+  padding-left:5px;
+}
+
+.ui-widget {
+    display:none;
+}
+
 .image .toggle .ilogo {
     position: absolute;
     height: 50px;
@@ -315,11 +347,7 @@ li input {
 
 /*search bar*/
 .ui-widget {
-	position: absolute;
-	top:70px;
-  z-index:10;
-  font-size:1em;
-  padding-left:5px;
+	display: none;
 }
 
 .extra {
@@ -334,7 +362,7 @@ li input {
 	width: 60px;
 }
 
-#mag { /*explore page logo*/
+.mag { /*explore page logo*/
     right: 80px;
     position: absolute;
     width: 25px;
@@ -347,10 +375,7 @@ li input {
     height: 2%;
 }
 
-#overlay_mg:hover {
-    background: gray;
 
-}
 
 #explore_mg { /*mylist search logo*/
     width: 30px;
@@ -655,6 +680,11 @@ select {
    color: white;
 }
 
+.search-input-line {
+
+    border-bottom: 2px solid black !important;
+}
+
 .sb-search {
 
     margin-bottom: 20px !important;
@@ -692,8 +722,10 @@ ul nav.navbar-nav{
      width: 100vw;
  }
 
- #mag { /*explore page logo*/
-    display: none;
+ .mag { /*explore page logo*/
+    position: absolute;
+    top:0px;
+    left: 220px;
 
 }
 
@@ -745,6 +777,34 @@ ul.nav.navbar-nav li{width:20%;font-size:1em;}
     width:60px;
     top:8px;
     z-index:1;
+}
+
+#pageTitle {
+
+display:none;
+}
+
+.ui-widget {
+    display: inline;
+    position: absolute;
+    top:70px;
+  z-index:10;
+  font-size:1em;
+  padding-left:5px;
+}
+
+.ui-widget1 {
+    display: block;
+    position: absolute;
+    top:70px;
+  z-index:10;
+  font-size:1em;
+  padding-left:5px;
+}
+
+.ui-widget-small {
+
+display:none;
 }
 
 }

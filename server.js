@@ -65,14 +65,14 @@ conn.once('open',function() {
           GInfo.removeUserShow(res,req.query.name,req.query.id,req.query.user,userM,showM); 
     });
 
-    app.get('/tokensignin',function(req, res){
-        console.log("aa");
-        console.log(req.idtoken);
+    app.post('/Usersignin',function(req, res){
+        
         res.header({
     'Content-Type': 'text/plain',
     'Access-Control-Allow-Origin' : '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
+        GInfo.insertUser(res,req.query.idtoken,userM); 
           
     });
 

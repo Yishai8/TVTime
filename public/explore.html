@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.6/angular-filter.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
   <script src="js/hamburger.js"></script>
   <!-- Latest compiled and minified CSS -->
@@ -58,15 +57,23 @@
          </ul>
        </div>
      </div>
+       <div class="ui-widget-small">
+ <div>
+  <form ng-submit="submit()" ng-model="selection">
+    <input class="sb-search-input " placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
+   <span class="sb-icon-search"></span>
+  </form>
+</div>
+</div>
      <span id="pageTitle">Explore</span>
-     <img id="mag" src="images/mag.png" ng-click="showme()">
+     <input type="image" class="mag" src="images/mag.png" alt="submit" ng-click="submit()">
      <img id="logo" src="images/logo.png">
    </section>
   <section><div class="ui-widget">
- <div ng-show="size">
+ <div >
   <form ng-submit="submit()" ng-model="selection">
-    <input class="sb-search-input" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
-    <input class="sb-search-submit" type="submit" value="submit">
+    <input class="sb-search-input search-input-line" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
+    <input type="image" class="mag" src="images/mag.png" alt="submit" ng-click="submit()">
     <span class="sb-icon-search"></span>
   </form>
 </div>
