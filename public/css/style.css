@@ -107,7 +107,7 @@ a img {
 #strip {
 	margin-bottom: 0;
 	height: 40px;
-	font-size:2em;
+	font-size:1.8em;
 	color: white;
 	font-family: Arial;
 	text-align:center;
@@ -139,10 +139,9 @@ a img {
 }
 
 .image img { 
-
 	padding-bottom: 20px;
 	padding-top: 3px;
-	width:300px;
+	width:280px;
 	height:350px;
 }
 
@@ -169,7 +168,7 @@ a img {
 
 .image-container {
     position: relative;
-    font-size: 1.5em;
+    font-size: 1.3em;
     font-weight: 500;
     text-align: center;
 }
@@ -189,7 +188,7 @@ a img {
 .toggle {
 
     position: absolute;
-    top: -97px;
+    bottom: -140px;
     left: 0;
     color: #FFF;
     text-align: center;
@@ -222,7 +221,7 @@ p button  {
 	height: 50px;
 	background: #f6343f;
 	border: 0;
-	font-size: 1em;
+	font-size: 0.9em;
 	object-position: center;
 }
 
@@ -236,7 +235,7 @@ p button  {
     height: 45px;
     width: 25px;
     top:70px;
-    right:50%;
+    left:43%;
     text-align: center;
     display: inline;
 }
@@ -286,7 +285,7 @@ p span {
 	bottom:30%;
 	width: 100%;
 	height: 50px;
-	font-size: 20px;
+	font-size: 0.9em;
 	object-position: center;	
 }
 
@@ -305,8 +304,6 @@ p span {
 	background:black;
 }
 
-
-
 /*radio button select css*/
 
 input[type='checkbox'] {
@@ -317,10 +314,9 @@ input[type='checkbox'] {
     border-radius:50%;
     outline:none;
     box-shadow:0 0 5px 0px gray inset;
-    top:30px;
-    right:50.5%;
+    top:35px;
+    left:44%;
     position: absolute;
-
 }
 input[type='checkbox']:hover {
     box-shadow:0 0 5px 0px orange inset;
@@ -337,7 +333,6 @@ input[type='checkbox']:before {
 input[type='checkbox']:checked:before {
     background:#f6343f;
 }
-
 
 li input {
 	width: 20px;
@@ -545,7 +540,8 @@ select {
 .display_plus{
 
     display:block !important;
-    width:15%;
+    width:70px;
+    text-align:center;
     height: 100%;
     right: 0%;
     background:#f6343f;
@@ -576,9 +572,8 @@ select {
 
 .display_sec {
 
-    padding-left:20%;
+    margin-left:15%;
     position: relative;
-
 }
 
 .img_gar {
@@ -586,16 +581,16 @@ select {
     margin:0 auto;
     position:relative;
     width: 60%;
-    height: 45%;
+    height: 35%;
     object-position: center;
     left:-10%;
 
 }
 
 .img_plus {
-    position:relative;
-    width: 50%;
-    height: 45%;
+    position:absolute;
+    right:8px;
+    width: 80%;
 }
 
 .img_array {
@@ -610,7 +605,7 @@ select {
 
 .list-container img {
 	
-	top:10px;
+	top:18%;
 	margin-top: 20px;
 	margin-bottom: 20px;
 	margin-left: 20px;
@@ -622,9 +617,10 @@ select {
 	left:50%;
 	display:inline;
 	top:30px;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	font-weight: bold;
-  margin-right:15%;
+  margin-right:20%;
+  height:120px;
 }
 
 .addShows {
@@ -707,6 +703,8 @@ ul nav.navbar-nav{
   font-size:1em;
 }
 
+section#section-0 img{}
+
 @media screen and (max-height: 450px) {
   .overlay {overflow-y: auto;}
   .overlay a {font-size: 20px}
@@ -744,7 +742,7 @@ ul nav.navbar-nav{
 
 div.navbar.navbar-inverse.navbar-fixed-top{width:90%;background: transparent;border-bottom:0px;}
 ul.nav.navbar-nav{width:100%;}
-ul.nav.navbar-nav li{width:20%; font-size:1.3vw;}
+ul.nav.navbar-nav li{width:20%; font-size:1.2vw;}
 .g-signin2 div {
     width: 0% !important;
 }
