@@ -134,6 +134,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 					var showID=arr[0];
 					var showName=arr[1];
 					var showImg=arr[2];
+
 					if(element.html()=="Add to Download List") {
 
 						if(localStorage.sub!="" && localStorage.sub!=undefined && localStorage!="undefined") {
@@ -180,7 +181,107 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 	else
 		$scope.login=true;
 
+	$scope.nextEpisode=function(el)
+		{
+			var index=-1;
+			for(i=0;i<el.showarr.length;i++)
+			{
+				if(el.episode.number==el.showarr[i].number)
+				{
+					index=i+1;
+				}
+			}
+			if(index!=-1 && el.showarr.length!=index)
+				el.episode=el.showarr[index];
 
+		};
+
+		$scope.previousEpisode=function(el)
+		{
+			var index=-1;
+			for(i=0;i<el.showarr.length;i++)
+			{
+				if(el.episode.number==el.showarr[i].number)
+				{
+					index=i-1;
+				}
+			}
+			if(index!=-1)
+				el.episode=el.showarr[index];
+
+		};
+
+		$scope.saveEpisode=function(el)
+		{
+			
+			$http.get('http://localhost:3000/updateUserShowEpisode?id='+parseInt(localStorage.sub)+'&&showId='+el.details.id+
+					'&&season='+el.episode.season+'&&episode='+el.episode.number).success(function(data) {
+						console.log("episode on show "+el.details.name+" updated successfully");
+						
+
+					});
+		};
+
+		$scope.getIndex=function(arr,episode)
+		{
+			var i=0;
+			var index=-1;
+			for (i=0;i<arr.length;i++)
+			{
+				if(arr[i].number==episode)
+					index=i;
+			}
+			return index;
+		
+		};
+
+	$scope.getSeason=function(item,type)	
+	{	
+		var filter_season;
+		var episode;
+		if(type==null)
+		{
+			filter_season=item.selectedSeason.number;
+			episode=item.item.ep_id;
+		}
+		else
+		{
+			filter_season=item.episode.season;
+			episode=item.episode.number;
+		}
+		var showarr=[];
+		angular.forEach(item.details._embedded.episodes,function(val,key){
+				
+			if(val.season==filter_season)
+			{
+
+						if(val.image==null &&(val.summary==null || val.summary=='') ) //if episode data is missing fill from show
+						{
+							val.image=item.episode.image;
+							val.summary=item.episode.summary;
+        } // Print the json response
+        else
+        {
+        	if(val.image==null)
+        	{
+        		val.image=item.episode.image;
+        	}
+        	else
+        		if(val.summary==null)
+        			val.summary=item.episode.summary;
+        	}
+        	val.summary=val.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+        	showarr.push(val);
+        }
+    });
+		if(type==null)
+		{
+			item.showarr=showarr;
+			item.episode=showarr[0];
+		}
+		else
+		return showarr;
+	};
 	$scope.addShowsSearch=function()
 	{	
 		var result = document.getElementsByClassName("image");
@@ -204,6 +305,9 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 
 	var arr=[];
 	$scope.opendiv=function(index,el){
+
+
+
 		function createArray(length) {
 			var arr = new Array(length || 0),
 			i = length;
@@ -214,10 +318,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 			}        
 			return arr;
 		};		
-		$scope.getSeason=function()
-		{	
-			console.log(el.episode.name+" change");	
-		};
+
 
 		if(el.episode==undefined)
 		{
@@ -225,12 +326,13 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 				+arr[index].ep_id).success(function(data) {
 					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
 					el.episode=data;
+					
 				});
 
 
 				$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
 					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
-					el.details =  data;0	
+					el.details =  data;
 					var castArray=[];
 					var SeasonsArray=[];
 
@@ -243,15 +345,12 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 					angular.forEach (el.details._embedded.seasons,function(val,key){
 						SeasonsArray.push(val);
 
-   /*<p>season<select ng-model="selectedSeason" ng-options="item for item in Season" ng-change="update(selectedSeason)"></select>
-episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" | range:item.episodeOrder> </select>
-  </p>
-  */
-});	
-					el.length=castArray.length;
+					});	
 					el.Season=SeasonsArray;
-					el.slides=castArray;	
-
+					el.slides=castArray;
+					el.showarr=$scope.getSeason(el,1);
+					el.episode=el.showarr[$scope.getIndex(el.showarr,el.item.ep_id)];
+								
 					$scope.slide = function(dir){
 						var vehArr = el.slides;
 						vehicle = {};
@@ -266,7 +365,7 @@ episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" 
 						}
 
 
-					}
+					};
 
 				});}
 
@@ -526,7 +625,6 @@ function attachSignin(element) {
 				localStorage.login="ok";
 				localStorage.name=googleUser.getBasicProfile().getName();
 				localStorage.email=googleUser.getBasicProfile().getEmail();
-				console.log(googleUser);
 				$.ajax({
 					type: "POST",
 					url: "http://localhost:3000/Usersignin?idtoken="+id_token
@@ -574,8 +672,8 @@ startApp();
 
 
 $( document ).ready(function(){
-localStorage.sub='111420641433671780000';
-localStorage.login=="ok";
+	localStorage.sub='111420641433671780000';
+
 	if(localStorage.login=="ok")
 		document.getElementById('name').innerText = localStorage.name+" |Logout";
 	else

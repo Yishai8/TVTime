@@ -195,77 +195,6 @@ insertUser : function (res,token,userM) {
 });
 
 
-        // var newUser= {
-        //     "id": showID,
-        //     "name":showName,
-        //     "shows":[]
-        // };
-
-        // userM.find({ id: userID },{ shows: { $elemMatch: { id: showID} } } ).exec(function(err,doc){
-        //     var d=JSON.parse(JSON.stringify(doc));
-        //     d.forEach(function(obj)
-        //     { 
-        //     if(obj.shows==0) //update new show for user
-        //     {
-
-        //         userM.findOne().where('id',userID).update({ 'shows.id': {$ne: newShow.id}}, 
-        //             {$push: {shows:newShow}
-        //         }
-        //         ).exec(function(err,doc){
-        //             if (err) {
-        //                 console.log(err);
-        //             }
-        //             console.log("viewer "+userID+" is now tracking show "+showID);
-
-        //         });
-        //     }
-        //     else
-        //     { //enable existing disabled show
-        //         userM.findOne().where('id',showID).update({id: userID, 'shows.id': showID}, 
-        //             {'$set': {
-        //                 'shows.$.active':true          
-        //             }}).exec(function(err,doc){
-        //                 console.log("show "+showID+" exists as non-active for viewer "+userID+",show reactivated");
-
-
-        //             });
-
-
-        //         }
-
-        //         showM.findOne().where('id',showID).exec(function(err,doc){console.log("doc-"+doc);
-        //             if(doc==null || doc=="null")
-        //             {
-
-        //                 showM.create(ShowRec,function(err,doc){
-        //                     console.log("show "+showID+" added to show DB for the first time");
-
-        //                 });
-        //             }
-        //             else
-        //             {
-        //                 showM.findOne().where('id',showID).update({id: showID}, 
-        //                     { $inc: { viewers: 1 } }).exec(function(err,doc){
-        //                         console.log("additional viewer added for show "+showID);
-
-        //                     });                                
-
-        //                 }
-
-        //             });
-
-
-        //     }
-
-        //     );
-
-        // });
-
-
-
-        // res.end();
-
-
     },
 
     getUserShows : function (res,userID,userM) {
@@ -308,7 +237,7 @@ showEpisode : function (res,id,season,ep_id) {
         {  
             var url =
             request({
-             url:'http://api.tvmaze.com/shows/'+id+'?embed=cast' ,
+             url:'http://api.tvmaze.com/shows/'+id ,
              json: true
          }, function (error, response, Newbody) {
 
@@ -364,6 +293,25 @@ removeUserShow : function (res,showName,showID,userID,userM,showM) {
 
         });       
         res.end();
+
+    },
+
+    updateUserShowEpisode : function (res,userID,showID,season,episode,userM) {
+
+    userID=parseInt(userID);
+   userM.update(
+    {id: userID, 'shows.id': showID}, 
+    {'$set': {
+        'shows.$.season':season,
+         'shows.$.ep_id':episode,         
+    }}
+    ).exec(function(err,doc){
+
+        console.log("Show episode updated");
+        res.end();
+    });
+
+        
 
     },
 

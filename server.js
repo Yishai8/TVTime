@@ -87,16 +87,16 @@ conn.once('open',function() {
           GInfo.showdata(res,req.query.id); 
     });
 
-    /*app.get('/showEpisode',function(req, res){
+     app.get('/updateUserShowEpisode',function(req, res){
 
-        console.log("get show "+req.query.id+" episodes for user "+req.query.user);
+        console.log("update show "+req.query.showId+" details");
         res.header({
     'Content-Type': 'text/plain',
     'Access-Control-Allow-Origin' : '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
     'Status' :200});
-          GInfo.showEpisode(res,req.query.id); 
-    });*/
+          GInfo.updateUserShowEpisode(res,req.query.id,req.query.showId,req.query.season,req.query.episode,userM); 
+    });
 
       app.get('/checkShow',function(req, res){
         res.header({

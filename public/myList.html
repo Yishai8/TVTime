@@ -78,12 +78,15 @@
         <img ng-click="showDiv = opendiv($index,this)" width="120px" height="120px" ng-src="{{item.link}}"></img> 
 
         <div class="check-element animate-show" ng-show="showDiv" ng-model="this.episode">
+          <span>Season {{episode.season}} Episode {{episode.number}} - {{episode.name}}</span>
           <p>Overwiew:<br><br>{{episode.summary}}<br><br>
           </p>
           <img src={{episode.image.medium}}>
-          <p>season<select ng-model="selectedSeason" ng-options="item.number for item in Season" data-ng-change="getSeason()"></select>
-
-            episode<select  ng-model="selectedEpisode" ng-options="item.episodeOrder for item in selectedSeason" | range:item.episodeOrder> </select>
+          <p>season<select ng-model="selectedSeason" ng-options="item.number for item in Season" data-ng-change="getSeason(this,null)"></select>
+          <a  ng-click="previousEpisode(this)" href="#" style="color:white">previous episode</a>
+          <a  ng-click="nextEpisode(this)" href="#" style="color:white">next episode</a>
+          <a ng-click="saveEpisode(this)" href="#" style="color:white">save episode</a>
+          
           </p>
         </div>
       </section>
@@ -107,7 +110,8 @@
            <img ng-src="{{item.image.medium}}" class="list_image">
            <p class="after">{{item.name}}<br><input type="checkbox" ></input>
             <img id="ex_logo" click title={{item.summary}}  toggle data-toggle="tooltip" data-placement="left" src="images/i-logo.png"></img>
-          </p>
+                    
+            </p>
 
 
         </li>
