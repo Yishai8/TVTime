@@ -81,7 +81,15 @@
    <p>Overwiew:<br><br>{{details.summary}}<br><br>
   Cast:
  </p>
- <img ng-repeat="slide in slides" class="img_array" src={{slide}}>
+ 
+    <div class="slider">
+        <a href ng-click="slide('left')">Left</a>
+         <img class="img_array" ng-repeat="slide in slides" src={{slide}}>
+      
+      <a href ng-click="slide('right')">Right</a>
+      </div>
+    </div>
+ 
  
   </div>
                  </section>
@@ -91,7 +99,7 @@
   </section>
 </main> 
 </div>
-</body>
+y</body>
 </html>
 
 

@@ -81,7 +81,7 @@
           <p>Overwiew:<br><br>{{episode.summary}}<br><br>
           </p>
           <img src={{episode.image.medium}}>
-          <p>season<select ng-model="selectedSeason" ng-options="item.number for item in Season"></select>
+          <p>season<select ng-model="selectedSeason" ng-options="item.number for item in Season" data-ng-change="getSeason()"></select>
 
             episode<select  ng-model="selectedEpisode" ng-options="item.episodeOrder for item in selectedSeason" | range:item.episodeOrder> </select>
           </p>

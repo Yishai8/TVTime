@@ -279,25 +279,12 @@ insertUser : function (res,token,userM) {
 
    },
 
-    /*showEpisode : function (res,id) { 
-        var url =
-        request({
-          url:'http://api.tvmaze.com/shows/'+id+'/seasons' ,
-          json: true
-      }, function (error, response, body) {
-
-        if (!error && response.statusCode === 200) {
-            console.log(body);
-        res.json(body); // Print the json response
-    }
-});
-
-},*/
+  
 
 showdata : function (res,id) { 
     var url =
     request({
-     url:'http://api.tvmaze.com/shows/'+id+'?embed[]=seasons&embed[]=cast' ,
+     url:'http://api.tvmaze.com/shows/'+id+'?embed[]=seasons&embed[]=cast&embed[]=episodes' ,
      json: true
  }, function (error, response, body) {
 

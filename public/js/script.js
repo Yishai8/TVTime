@@ -176,10 +176,11 @@ list.filter('range', function() {
 
 list.controller("listData",function ($scope,$http,$window, $timeout){
 	if(localStorage.sub=="" || localStorage.sub==undefined ||localStorage.sub=="undefined")		
-					$scope.login=false;
-				else
-					$scope.login=true;
-				
+		$scope.login=false;
+	else
+		$scope.login=true;
+
+
 	$scope.addShowsSearch=function()
 	{	
 		var result = document.getElementsByClassName("image");
@@ -203,7 +204,6 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 
 	var arr=[];
 	$scope.opendiv=function(index,el){
-
 		function createArray(length) {
 			var arr = new Array(length || 0),
 			i = length;
@@ -214,107 +214,131 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 			}        
 			return arr;
 		};		
-		$http.get('http://localhost:3000/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
-			+arr[index].ep_id).success(function(data) {
-				data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
-				el.episode=data;
-			});
+		$scope.getSeason=function()
+		{	
+			console.log(el.episode.name+" change");	
+		};
 
-
-			$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
-				data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
-				el.details =  data;
-				var castArray=[];
-				var SeasonsArray=[];
-				
-				angular.forEach (el.details._embedded.cast,function(val,key){
-					if(val.person.image)
-						castArray.push(val.person.image.medium);
-
+		if(el.episode==undefined)
+		{
+			$http.get('http://localhost:3000/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
+				+arr[index].ep_id).success(function(data) {
+					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
+					el.episode=data;
 				});
 
-				angular.forEach (el.details._embedded.seasons,function(val,key){
-					SeasonsArray.push(val);
+
+				$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
+					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
+					el.details =  data;0	
+					var castArray=[];
+					var SeasonsArray=[];
+
+					angular.forEach (el.details._embedded.cast,function(val,key){
+						if(val.person.image)
+							castArray.push(val.person.image.medium);
+
+					});
+
+					angular.forEach (el.details._embedded.seasons,function(val,key){
+						SeasonsArray.push(val);
 
    /*<p>season<select ng-model="selectedSeason" ng-options="item for item in Season" ng-change="update(selectedSeason)"></select>
 episode<select  ng-model="selectedEpisode" ng-options="item for item in items2" | range:item.episodeOrder> </select>
   </p>
   */
-});
-				console.log(SeasonsArray[0]);
-				el.Season=SeasonsArray;
-				el.slides=castArray;	
-			});
+});	
+					el.length=castArray.length;
+					el.Season=SeasonsArray;
+					el.slides=castArray;	
 
-			return !this.showDiv;
+					$scope.slide = function(dir){
+						var vehArr = el.slides;
+						vehicle = {};
+						if (dir === 'left') {
+							first_item = vehArr[0];
+							vehArr.shift();
+							vehArr.push(first_item);
+
+						} else {
+							vehicle = vehArr.pop();
+							vehArr.unshift(vehicle);
+						}
 
 
-		};
+					}
 
-		var div;
-		var section;
-		var plus;
-		$scope.swipdir = function (dir,index,el) { 
-			div = document.getElementById('item-'+index);
-			section = document.getElementById('section-'+index);
-			if(el.active==undefined)
-				el.active=true;
+				});}
 
-			if(dir=="left")
-			{
-				if(el.active)
+				return !this.showDiv;
+
+
+			};
+
+			var div;
+			var section;
+			var plus;
+			$scope.swipdir = function (dir,index,el) { 
+				div = document.getElementById('item-'+index);
+				section = document.getElementById('section-'+index);
+				if(el.active==undefined)
+					el.active=true;
+
+				if(dir=="left")
 				{
-					div.className="hidden_gar";
-					section.className="hidden_sec";
+					if(el.active)
+					{
+						div.className="hidden_gar";
+						section.className="hidden_sec";
+					}
 				}
-			}
-			else
-			{
-				if(el.active)
+				else
 				{
-					div.className="display_gar";
-					section.className="display_sec";
-				}
-
-			}
-		};
-
-		$scope.del = function (el,ind,showName,showID) {
-			div = document.getElementById('item-'+ind);
-			section = document.getElementById('section-'+ind);
-			plus = document.getElementById('plus-'+ind);
-			if(confirm("are you sure you want to remove this series?"))
-			{
-				div.className="hidden_gar";
-				section.className="sec_del";
-				plus.className="display_plus";
-				el.active=false;
-				$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
-					'&&user='+parseInt(localStorage.sub)).success(function(data) {
-
-
-					});
+					if(el.active)
+					{
+						div.className="display_gar";
+						section.className="display_sec";
+					}
 
 				}
+			};
 
-			};	
-
-			$scope.active_sec = function (el,ind,showName,showID) {
+			$scope.del = function (el,ind,showName,showID) {
 				div = document.getElementById('item-'+ind);
 				section = document.getElementById('section-'+ind);
 				plus = document.getElementById('plus-'+ind);
+				if(confirm("are you sure you want to remove this series?"))
+				{
+					div.className="hidden_gar";
+					section.className="sec_del";
+					plus.className="display_plus";
+					el.active=false;
+					$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+						'&&user='+parseInt(localStorage.sub)).success(function(data) {
 
-				el.active=true;
-				div.className="hidden_gar";
-				section.className="hidden_sec";
-				plus.className="hidden_plus";
-				$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
-					'&&img='+""+'&&user='+parseInt(localStorage.sub)).success(function(data) {
 
+						});
 
-					});
+					}
 
 				};	
+
+				$scope.active_sec = function (el,ind,showName,showID) {
+					div = document.getElementById('item-'+ind);
+					section = document.getElementById('section-'+ind);
+					plus = document.getElementById('plus-'+ind);
+
+					el.active=true;
+					div.className="hidden_gar";
+					section.className="hidden_sec";
+					plus.className="hidden_plus";
+					$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+						'&&img='+""+'&&user='+parseInt(localStorage.sub)).success(function(data) {
+
+
+						});
+
+					};	
 //get user's  shows
 $http.get('http://localhost:3000/getUserShows?userID='+parseInt(localStorage.sub)).success(function(data) {
 
@@ -550,7 +574,8 @@ startApp();
 
 
 $( document ).ready(function(){
-
+localStorage.sub='111420641433671780000';
+localStorage.login=="ok";
 	if(localStorage.login=="ok")
 		document.getElementById('name').innerText = localStorage.name+" |Logout";
 	else
