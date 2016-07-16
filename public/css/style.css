@@ -201,13 +201,13 @@ a img {
 
 #searchAdd {
     position:absolute;
-    right:10% !important;
+    font-size:2vw;
     background:#f6343f;
     border-width:0px;
     color:white;
     width:60px;
     top:8px;
-    right:20% !important;
+    right:25% !important;
     z-index:1;
 
 }
@@ -244,7 +244,7 @@ p button  {
     display: inline;
     position: absolute;
     top:10px;
-    right:18%;
+    right:100px;
   z-index:10;
   font-size:1em;
   padding-left:5px;
@@ -383,12 +383,10 @@ li input {
 }
 
 .AddShow {
-
     color: white;
-    font-size: 1.8em;
+    font-size: 3vw;
     font-weight: bold;
 }
-
 #pageTitle {
 	left: 50px;
 	position: absolute;
