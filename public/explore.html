@@ -60,7 +60,7 @@
        <div class="ui-widget-small">
  <div>
   <form ng-submit="submit()" ng-model="selection">
-    <input class="sb-search-input " placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
+    <input class="sb-search-input " placeholder="search" ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
    <span class="sb-icon-search"></span>
   </form>
 </div>
@@ -75,7 +75,7 @@
     <input class="sb-search-input search-input-line" placeholder="Enter your search term..." ng-keyup='empty()' ng-model="text" type="search" value="" name="search" id="search">
     <input type="image" class="mag" src="images/mag.png" alt="submit" ng-click="submit()">
     <span class="sb-icon-search"></span>
-     <button  id="searchAdd1" data-ng-click="addShowsSearch()">Add Shows</button>
+    
   </form>
 </div>
 </div></section>
@@ -88,7 +88,7 @@
     <ul class="image">
               <li ng-repeat="item in cart" class="list_explore">
                  <img ng-src="{{item.image.medium}}" class="list_image">
-                 <p class="after">{{item.name}}<br><input type="checkbox" ng-show="login"></input>
+                 <p class="after">{{item.name}}<br>
                   <img id="ex_logo" click title={{item.summary}}  toggle data-toggle="tooltip" data-placement="left" src="images/i-logo.png"></img>
                  </p>
                                  
@@ -98,7 +98,7 @@
 
   </section>
 </main>
-</div>
+</div>  
 </body>
 </html>
 
