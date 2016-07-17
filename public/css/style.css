@@ -352,7 +352,7 @@ li input {
 
 .extra {
     overflow-y: visible !important;
-    position: static;
+    position: static !important;
     scroll-behavior: smooth;
 }
 
@@ -679,7 +679,7 @@ select {
 
 .sb-search-input {
 
-
+    z-index: 10;
    border: 0;
    outline: 0;
    background: transparent;
