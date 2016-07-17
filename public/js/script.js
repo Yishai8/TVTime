@@ -28,7 +28,7 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 			{	
 				if($scope.Newkeys==0 &&$scope.Oldkeys>0) //check if input was already empty on keyup(no refresh)
 				{
-					$http.get('http://localhost:3000/explore').success(function(data) {
+					$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 						$scope.cart = limitRes(data);
 					});
 				}
@@ -37,12 +37,12 @@ var recommended = angular.module('recommended',[]).controller("popular",function
 
 		$scope.submit = function() { console.log("here");
 		if($scope.Oldkeys>0)
-			$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
+			$http.get('https://tvtime.herokuapp.com/search?query='+this.text).success(function(data) {
 				$scope.cart = searchRes(data);
 			})
 
 	};
-	$http.get('http://localhost:3000/explore').success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 		$scope.cart = limitRes(data);
 	});
 
@@ -56,7 +56,7 @@ airing.controller("today",function ($scope,$http){		//index.html page
 
 	
 	//getting today's schedule
-	$http.get('http://localhost:3000/airing?date='+today).success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/airing?date='+today).success(function(data) {
 		$scope.cart = removeDbl(data);
 		
 
@@ -65,7 +65,7 @@ airing.controller("today",function ($scope,$http){		//index.html page
 airing.controller("tomorrow",function ($scope,$http){	//index.html page
 	
 	//getting tomorrow's schedule
-	$http.get('http://localhost:3000/airing?date='+tomorrow).success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/airing?date='+tomorrow).success(function(data) {
 		
 		$scope.cart = removeDbl(data);
 	})});
@@ -83,7 +83,7 @@ airing.directive('sibs', function($http) { //open/close hidden show div and chec
 				{
 					if(localStorage.sub!="" && localStorage.sub!="undefined" && localStorage.sub!=undefined)
 					{ 
-						$http.get('http://localhost:3000/checkShow?userID='+parseInt(localStorage.sub)+'&&showID='+scope.text).success(function(data) {
+						$http.get('https://tvtime.herokuapp.com/checkShow?userID='+parseInt(localStorage.sub)+'&&showID='+scope.text).success(function(data) {
 
 							if(data!="null")
 								element.parent().children('p').children('button')[0].innerHTML='Show is being followed';
@@ -113,7 +113,7 @@ airing.directive('youtube', function($http) { // future use
 		link: function(scope, element, attrs) {
 			element.bind('click', function() {
 				var target = element[0].querySelector('#show');
-				$http.get('http://localhost:3000/youtube?name='+target.innerHTML).success(function(data) {
+				$http.get('https://tvtime.herokuapp.com/youtube?name='+target.innerHTML).success(function(data) {
 
 
 				});
@@ -138,7 +138,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 					if(element.html()=="Add to Download List") {
 
 						if(localStorage.sub!="" && localStorage.sub!=undefined && localStorage!="undefined") {
-							$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+							$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+showName+'&&id='+showID+
 								'&&img='+showImg+'&&user='+parseInt(localStorage.sub)).success(function(data) {
 									element[0].innerHTML="Show is being followed";
 									//elem.className='but';
@@ -148,7 +148,7 @@ airing.directive('click', function($http) { //adding/removing show to/from DB
 
 						}
 						else {
-							$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+							$http.get('https://tvtime.herokuapp.com/removeUserShow?name='+showName+'&&id='+showID+
 								'&&user='+parseInt(localStorage.sub)).success(function(data) {
 									element[0].innerHTML="Add to Download List";
 
@@ -214,7 +214,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 		$scope.saveEpisode=function(el)
 		{
 			
-			$http.get('http://localhost:3000/updateUserShowEpisode?id='+parseInt(localStorage.sub)+'&&showId='+el.details.id+
+			$http.get('https://tvtime.herokuapp.com/updateUserShowEpisode?id='+parseInt(localStorage.sub)+'&&showId='+el.details.id+
 					'&&season='+el.episode.season+'&&episode='+el.episode.number).success(function(data) {
 						console.log("episode on show "+el.details.name+" updated successfully");
 						
@@ -290,7 +290,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 		angular.forEach(isChecked, function(value, index) {
 			if(value.checked)
 			{
-				$http.get('http://localhost:3000/insertUserShow?name='+$scope.cart[index].name+'&&id='+$scope.cart[index].id+
+				$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+$scope.cart[index].name+'&&id='+$scope.cart[index].id+
 					'&&img='+$scope.cart[index].image.medium+'&&user='+parseInt(localStorage.sub)).success(function(data) {
 						console.log("show "+$scope.cart[index].name+" added successfully");
 
@@ -322,7 +322,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 
 		if(el.episode==undefined)
 		{
-			$http.get('http://localhost:3000/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
+			$http.get('https://tvtime.herokuapp.com/showEpisode?id='+arr[index].id+'&&season='+arr[index].season+'&&episode='
 				+arr[index].ep_id).success(function(data) {
 					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, ''); 
 					el.episode=data;
@@ -330,7 +330,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 				});
 
 
-				$http.get('http://localhost:3000/showdata?id='+arr[index].id).success(function(data) {
+				$http.get('https://tvtime.herokuapp.com/showdata?id='+arr[index].id).success(function(data) {
 					data.summary=data.summary.replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '');
 					el.details =  data;
 					var castArray=[];
@@ -412,7 +412,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 					section.className="sec_del";
 					plus.className="display_plus";
 					el.active=false;
-					$http.get('http://localhost:3000/removeUserShow?name='+showName+'&&id='+showID+
+					$http.get('https://tvtime.herokuapp.com/removeUserShow?name='+showName+'&&id='+showID+
 						'&&user='+parseInt(localStorage.sub)).success(function(data) {
 
 
@@ -431,7 +431,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 					div.className="hidden_gar";
 					section.className="hidden_sec";
 					plus.className="hidden_plus";
-					$http.get('http://localhost:3000/insertUserShow?name='+showName+'&&id='+showID+
+					$http.get('https://tvtime.herokuapp.com/insertUserShow?name='+showName+'&&id='+showID+
 						'&&img='+""+'&&user='+parseInt(localStorage.sub)).success(function(data) {
 
 
@@ -439,7 +439,7 @@ list.controller("listData",function ($scope,$http,$window, $timeout){
 
 					};	
 //get user's  shows
-$http.get('http://localhost:3000/getUserShows?userID='+parseInt(localStorage.sub)).success(function(data) {
+$http.get('https://tvtime.herokuapp.com/getUserShows?userID='+parseInt(localStorage.sub)).success(function(data) {
 
 	for(var i in data)
 	{
@@ -470,7 +470,7 @@ $scope.Oldkeys=0; //if field already empty
 			if($scope.Newkeys==0 &&$scope.Oldkeys>0) //check if input was already empty on keyup(no refresh)
 			{
 
-				$http.get('http://localhost:3000/explore').success(function(data) {
+				$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 					$scope.cart = limitRes(data);
 
 				});
@@ -483,12 +483,12 @@ $scope.Oldkeys=0; //if field already empty
 		console.log("old"+$scope.Oldkeys);
 		console.log("new"+$scope.Newkeys);
 		if($scope.Oldkeys>=0 && $scope.Newkeys>0)
-			$http.get('http://localhost:3000/search?query='+this.text).success(function(data) {
+			$http.get('https://tvtime.herokuapp.com/search?query='+this.text).success(function(data) {
 				$scope.cart = searchRes(data);
 			})
 
 	};
-	$http.get('http://localhost:3000/explore').success(function(data) {
+	$http.get('https://tvtime.herokuapp.com/explore').success(function(data) {
 		$scope.cart = limitRes(data);
 	});
 
@@ -627,7 +627,7 @@ function attachSignin(element) {
 				localStorage.email=googleUser.getBasicProfile().getEmail();
 				$.ajax({
 					type: "POST",
-					url: "http://localhost:3000/Usersignin?idtoken="+id_token
+					url: "https://tvtime.herokuapp.com/Usersignin?idtoken="+id_token
 				}).success(function(res) {
 					localStorage.sub=res;
 					console.log(googleUser);
@@ -672,7 +672,7 @@ startApp();
 
 
 $( document ).ready(function(){
-	localStorage.sub='111420641433671780000';
+
 
 	if(localStorage.login=="ok")
 		document.getElementById('name').innerText = localStorage.name+" |Logout";
