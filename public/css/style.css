@@ -142,12 +142,11 @@ a img {
 	padding-bottom: 20px;
 	padding-top: 3px;
 	width:280px;
-	height:350px;
 }
 
 .list_image {
     display: inline !important; 
-    width:40% !important;    
+    width:250px !important;    
     text-align: center !important;
     padding-bottom: 20px !important;
     padding-top: 3px !important;
@@ -717,7 +716,8 @@ section#section-0 img{}
 
 @media(max-width:380px){
   div.navbar.navbar-inverse.navbar-fixed-top {
-    width: 40%;
+    width: 50%;
+    font-size:0.8em;
 }
 }
 
