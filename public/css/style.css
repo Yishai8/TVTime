@@ -211,6 +211,20 @@ a img {
 
 }
 
+#searchAdd1 {
+    position:absolute
+    right:280% !important;
+    background:black;
+    border-width:1px;
+    border-color: black;
+    color:white;
+    width:120%;
+    top:37px;
+    z-index:1;
+   
+}
+
+
 p button  {
 	margin:0 auto;
 	position:absolute;
@@ -717,7 +731,11 @@ section#section-0 img{}
 @media(max-width:380px){
   div.navbar.navbar-inverse.navbar-fixed-top {
     width: 50%;
+<<<<<<< HEAD
+    font-size: 0.8em;
+=======
     font-size:0.8em;
+>>>>>>> 468c584d388576cbaeee888edcffc004c07367a8
 }
 }
 
