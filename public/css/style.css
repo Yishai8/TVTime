@@ -796,6 +796,18 @@ ul.nav.navbar-nav li{width:20%; font-size:1.2vw;}
     z-index:1;
 }
 
+#searchAdd1 {
+    position:absolute;
+    left:150% !important;
+    background:black;
+    border-width:1px;
+    border-color: black;
+    color:white;
+    width:50%;
+    top:0px;
+    z-index:1;
+}
+
 #pageTitle {
 
 display:none;
